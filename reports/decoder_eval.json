@@ -1,0 +1,35 @@
+{
+  "levels": [
+    1.0,
+    0.9,
+    0.8,
+    0.7,
+    0.6,
+    0.5
+  ],
+  "results": {
+    "Greedy (top-1)": [
+      1.0,
+      0.8054347826086956,
+      0.6173913043478261,
+      0.5021739130434782,
+      0.38804347826086955,
+      0.2826086956521739
+    ],
+    "Beam search": [
+      0.9934782608695653,
+      0.8619565217391304,
+      0.7,
+      0.625,
+      0.5195652173913043,
+      0.41739130434782606
+    ]
+  },
+  "trials": 20,
+  "cases": 46,
+  "miss_rate": 0.25,
+  "confusions_from": "uniform (no trained model yet)",
+  "beam_width": 5,
+  "lm_weight": 0.2,
+  "figure": "D:\\AI_PRJ\\reports\\figures\\decoder_robustness.png"
+}

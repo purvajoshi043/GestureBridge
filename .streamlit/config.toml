@@ -1,0 +1,19 @@
+[server]
+# No first-run e-mail prompt; open http://127.0.0.1:8502 (run_app.bat opens it for you).
+headless = true
+runOnSave = false
+# Privacy: only this computer can open the app (and see the camera), not the whole network.
+address = "127.0.0.1"
+# 8501 is used by another project on this laptop
+port = 8502
+
+[browser]
+# Privacy: do not send usage statistics.
+gatherUsageStats = false
+
+[theme]
+base = "dark"
+primaryColor = "#8b5cf6"
+backgroundColor = "#070b1a"
+secondaryBackgroundColor = "#11162b"
+textColor = "#e6e9ff"

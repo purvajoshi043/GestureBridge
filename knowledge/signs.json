@@ -1,0 +1,27 @@
+{
+  "_about": "Sign vocabulary used by the data-collection tool, the recogniser and the UI. 'word' signs go into the sentence, 'control' signs operate the app, 'none' is the background class. The key-poses are the handshapes of the Instant recogniser (gesturebridge/handshape_rules.py), so recordings and instant mode use the same signs. Replace them with real ISL handshapes if you like - the trained model only cares about the label.",
+  "signs": [
+    {"label": "HELLO", "type": "word", "keypose": "Open hand, all fingers straight, thumb sticking out.", "basis": "Universal wave"},
+    {"label": "I", "type": "word", "keypose": "Fist with only the little finger up, thumb tucked in.", "basis": "ASL letter I"},
+    {"label": "YOU", "type": "word", "keypose": "Index finger pointing up, other fingers curled, thumb tucked in.", "basis": "Pointing at the listener"},
+    {"label": "WANT", "type": "word", "keypose": "Thumb, index and middle finger out (like the number 3), ring and little finger curled.", "basis": "ASL WANT handshape"},
+    {"label": "WATER", "type": "word", "keypose": "Index, middle and ring fingers up (W), little finger curled.", "basis": "ASL WATER (W-hand)"},
+    {"label": "FOOD", "type": "word", "keypose": "Flat-O: all fingertips pinched together against the thumb.", "basis": "ASL EAT / FOOD"},
+    {"label": "HUNGRY", "type": "word", "keypose": "C-shape: all fingers curved, thumb out, as if holding a cup.", "basis": "ASL HUNGRY (C-hand)"},
+    {"label": "HELP", "type": "word", "keypose": "Thumbs up.", "basis": "ASL HELP (A-hand)"},
+    {"label": "NO", "type": "word", "keypose": "Thumbs down.", "basis": "Prototype key-pose"},
+    {"label": "YES", "type": "word", "keypose": "Closed fist with the thumb tucked in.", "basis": "ASL YES (S-hand)"},
+    {"label": "THANK_YOU", "type": "word", "keypose": "I-love-you hand: thumb, index and little finger out.", "basis": "End position of ASL THANK YOU"},
+    {"label": "PLEASE", "type": "word", "keypose": "Flat hand, all four fingers straight, thumb tucked in.", "basis": "ASL PLEASE location"},
+    {"label": "SORRY", "type": "word", "keypose": "Y-hand: thumb and little finger out.", "basis": "Prototype key-pose"},
+    {"label": "GO", "type": "word", "keypose": "Index finger pointing sideways, thumb tucked in.", "basis": "ASL GO (index pointing away)"},
+    {"label": "HOME", "type": "word", "keypose": "L-shape: thumb and index finger out.", "basis": "Prototype key-pose"},
+    {"label": "THIRSTY", "type": "word", "keypose": "Index finger pointing down, thumb tucked in.", "basis": "ASL THIRSTY (index traces down the throat)"},
+    {"label": "MY", "type": "word", "keypose": "Flat hand sideways (fingers pointing left/right), thumb tucked in.", "basis": "ASL MY (flat hand on the chest)"},
+    {"label": "NAME", "type": "word", "keypose": "Index and middle finger together, pointing sideways (H), thumb tucked.", "basis": "ASL NAME (H-hands)"},
+    {"label": "SPEAK", "type": "control", "keypose": "OK sign: thumb and index fingertip touching, other three fingers up.", "action": "Finish the sentence and speak it"},
+    {"label": "CLEAR", "type": "control", "keypose": "V sign: index and middle finger up, thumb tucked in.", "action": "Clear the word buffer"},
+    {"label": "DELETE", "type": "control", "keypose": "Horns: index and little finger up, thumb tucked in.", "action": "Delete the last word"},
+    {"label": "NOTHING", "type": "none", "keypose": "Relaxed hand, hand moving between signs, scratching, resting - anything that is NOT a sign.", "action": "Ignored (stops random movements from being read as signs)"}
+  ]
+}

@@ -1,0 +1,1502 @@
+{
+  "_about": "Production rules (IF pattern THEN actions) used by the forward-chaining inference engine in gesturebridge/language/rule_engine.py. Higher salience fires first. Pattern = consecutive tokens; each constraint tests token facts (gloss, pos, features). 'at': start/end refer to the current clause (punctuation separates clauses), first/last to the whole sentence. Explanations may use {x} (token text before the rule fired), {x_now} (after) and {added} (words inserted).",
+  "rules": [
+    {
+      "id": "R01",
+      "name": "remove_repeated_sign",
+      "salience": 100,
+      "description": "The same sign recognised twice in a row is treated as one sign.",
+      "pattern": [
+        {
+          "bind": "a",
+          "inserted": false,
+          "pos": {
+            "not": "punct"
+          }
+        },
+        {
+          "bind": "b",
+          "inserted": false,
+          "gloss": {
+            "same_as": "a"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "op": "delete",
+          "ref": "b"
+        }
+      ],
+      "explain": "'{a}' was signed twice in a row, so the repeat was removed."
+    },
+    {
+      "id": "R02",
+      "name": "thank_you_merge",
+      "salience": 97,
+      "description": "THANK_YOU followed by YOU just means 'thank you'.",
+      "pattern": [
+        {
+          "bind": "t",
+          "gloss": "THANK_YOU"
+        },
+        {
+          "bind": "y",
+          "gloss": "YOU"
+        }
+      ],
+      "actions": [
+        {
+          "op": "delete",
+          "ref": "y"
+        }
+      ],
+      "explain": "'thank you' already contains 'you', so the extra YOU sign was dropped."
+    },
+    {
+      "id": "R03",
+      "name": "greeting_boundary",
+      "salience": 95,
+      "description": "A greeting followed by more signs is a sentence of its own.",
+      "pattern": [
+        {
+          "bind": "g",
+          "pos": "greeting"
+        },
+        {
+          "bind": "x",
+          "pos": {
+            "not": "punct"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "g",
+          "word": "!",
+          "pos": "punct"
+        }
+      ],
+      "explain": "Greeting '{g}' forms its own sentence, so '!' was added after it."
+    },
+    {
+      "id": "R04",
+      "name": "formula_boundary",
+      "salience": 95,
+      "description": "A fixed phrase such as 'thank you' followed by more signs is a sentence of its own.",
+      "pattern": [
+        {
+          "bind": "f",
+          "pos": "formula"
+        },
+        {
+          "bind": "x",
+          "pos": {
+            "not": "punct"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "f",
+          "word": ".",
+          "pos": "punct"
+        }
+      ],
+      "explain": "'{f}' is a complete phrase, so a full stop was added after it."
+    },
+    {
+      "id": "R05",
+      "name": "interjection_comma",
+      "salience": 95,
+      "description": "A reply word (yes/no/okay) at the start of a sentence is followed by a comma.",
+      "pattern": [
+        {
+          "bind": "i",
+          "pos": "interjection",
+          "at": "start"
+        },
+        {
+          "bind": "x",
+          "pos": {
+            "not": "punct"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "i",
+          "word": ",",
+          "pos": "punct"
+        }
+      ],
+      "explain": "'{i}' is a reply word at the start, so a comma was added after it."
+    },
+    {
+      "id": "R06",
+      "name": "question_marker",
+      "salience": 95,
+      "description": "The QUESTION marker (button or sign) turns the sentence into a yes/no question.",
+      "pattern": [
+        {
+          "bind": "q",
+          "gloss": "QUESTION"
+        }
+      ],
+      "actions": [
+        {
+          "op": "delete",
+          "ref": "q"
+        },
+        {
+          "op": "add_fact",
+          "fact": "question"
+        },
+        {
+          "op": "add_fact",
+          "fact": "yes_no_question"
+        }
+      ],
+      "explain": "The QUESTION marker makes this a yes/no question."
+    },
+    {
+      "id": "R07",
+      "name": "final_negation",
+      "salience": 92,
+      "description": "Sign languages often put the negation at the end (I HUNGRY NO).",
+      "pattern": [
+        {
+          "bind": "n",
+          "gloss": [
+            "NO",
+            "NOT"
+          ],
+          "at": "end",
+          "not_at": "start"
+        }
+      ],
+      "actions": [
+        {
+          "op": "delete",
+          "ref": "n"
+        },
+        {
+          "op": "add_fact",
+          "fact": "negated"
+        }
+      ],
+      "explain": "'{n}' at the end negates the sentence; it will be expressed as 'not'."
+    },
+    {
+      "id": "R08",
+      "name": "internal_negation",
+      "salience": 92,
+      "description": "A negation sign between the subject and the predicate (I NOT HUNGRY).",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": [
+            "pronoun",
+            "noun"
+          ]
+        },
+        {
+          "bind": "n",
+          "gloss": [
+            "NO",
+            "NOT"
+          ]
+        },
+        {
+          "bind": "x",
+          "pos": [
+            "adjective",
+            "verb"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "op": "delete",
+          "ref": "n"
+        },
+        {
+          "op": "add_fact",
+          "fact": "negated"
+        }
+      ],
+      "explain": "'{n}' between '{s}' and '{x}' negates the sentence."
+    },
+    {
+      "id": "R09",
+      "name": "sov_to_svo",
+      "salience": 91,
+      "description": "ISL uses Subject-Object-Verb order (I WATER WANT); English uses Subject-Verb-Object.",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": "pronoun",
+          "case": "subj"
+        },
+        {
+          "bind": "o",
+          "pos": "noun",
+          "place": {
+            "not": true
+          }
+        },
+        {
+          "bind": "v",
+          "pos": "verb",
+          "transitive": true
+        }
+      ],
+      "actions": [
+        {
+          "op": "reorder",
+          "refs": [
+            "s",
+            "v",
+            "o"
+          ]
+        }
+      ],
+      "explain": "Sign order Subject-Object-Verb ('{s} {o} {v}') was changed to English Subject-Verb-Object."
+    },
+    {
+      "id": "R10",
+      "name": "topic_to_svo",
+      "salience": 91,
+      "description": "The object is often signed first as the topic (WATER I WANT).",
+      "pattern": [
+        {
+          "bind": "o",
+          "pos": "noun",
+          "place": {
+            "not": true
+          }
+        },
+        {
+          "bind": "s",
+          "pos": "pronoun",
+          "case": "subj"
+        },
+        {
+          "bind": "v",
+          "pos": "verb",
+          "transitive": true
+        }
+      ],
+      "actions": [
+        {
+          "op": "reorder",
+          "refs": [
+            "s",
+            "v",
+            "o"
+          ]
+        }
+      ],
+      "explain": "Topic-first order ('{o}' signed first) was changed to English Subject-Verb-Object."
+    },
+    {
+      "id": "R11",
+      "name": "wh_word_to_front",
+      "salience": 90,
+      "description": "Sign languages often put the question word at the end (BATHROOM WHERE).",
+      "pattern": [
+        {
+          "bind": "w",
+          "pos": "wh",
+          "at": "end",
+          "not_at": "start"
+        }
+      ],
+      "actions": [
+        {
+          "op": "move",
+          "ref": "w",
+          "to": "clause_start"
+        },
+        {
+          "op": "add_fact",
+          "fact": "question"
+        }
+      ],
+      "explain": "Question word '{w}' was moved to the front, as English questions require."
+    },
+    {
+      "id": "R12",
+      "name": "wh_question_fact",
+      "salience": 90,
+      "description": "A sentence that starts with a question word is a question.",
+      "pattern": [
+        {
+          "bind": "w",
+          "pos": "wh",
+          "at": "start"
+        }
+      ],
+      "unless_facts": [
+        "question"
+      ],
+      "actions": [
+        {
+          "op": "add_fact",
+          "fact": "question"
+        }
+      ],
+      "explain": "The sentence starts with question word '{w}', so it is a question."
+    },
+    {
+      "id": "R13",
+      "name": "object_before_verb",
+      "salience": 89,
+      "description": "Object signed before its verb without a subject (WATER WANT).",
+      "pattern": [
+        {
+          "bind": "o",
+          "pos": "noun",
+          "place": {
+            "not": true
+          },
+          "animate": {
+            "not": true
+          }
+        },
+        {
+          "bind": "v",
+          "pos": "verb",
+          "transitive": true
+        }
+      ],
+      "actions": [
+        {
+          "op": "reorder",
+          "refs": [
+            "v",
+            "o"
+          ]
+        }
+      ],
+      "explain": "Object '{o}' was signed before verb '{v}'; English puts the verb first."
+    },
+    {
+      "id": "R14",
+      "name": "place_before_motion_verb",
+      "salience": 89,
+      "description": "Place signed before a motion verb (HOME GO).",
+      "pattern": [
+        {
+          "bind": "p",
+          "pos": "noun",
+          "place": true
+        },
+        {
+          "bind": "v",
+          "pos": "verb",
+          "motion": true
+        }
+      ],
+      "actions": [
+        {
+          "op": "reorder",
+          "refs": [
+            "v",
+            "p"
+          ]
+        }
+      ],
+      "explain": "Place '{p}' was signed before '{v}'; English says '{v} ... {p}'."
+    },
+    {
+      "id": "R15",
+      "name": "help_request",
+      "salience": 85,
+      "description": "HELP at the start of a sentence is a request for help.",
+      "pattern": [
+        {
+          "bind": "h",
+          "gloss": "HELP",
+          "at": "start"
+        }
+      ],
+      "unless_facts": [
+        "request"
+      ],
+      "actions": [
+        {
+          "op": "add_fact",
+          "fact": "request"
+        }
+      ],
+      "explain": "'{h}' at the start of the sentence is read as a request."
+    },
+    {
+      "id": "R16",
+      "name": "please_help_request",
+      "salience": 85,
+      "description": "PLEASE HELP is a request for help.",
+      "pattern": [
+        {
+          "bind": "p",
+          "gloss": "PLEASE"
+        },
+        {
+          "bind": "h",
+          "gloss": "HELP"
+        }
+      ],
+      "unless_facts": [
+        "request"
+      ],
+      "actions": [
+        {
+          "op": "add_fact",
+          "fact": "request"
+        }
+      ],
+      "explain": "'{p} {h}' is a request for help."
+    },
+    {
+      "id": "R17",
+      "name": "i_need_help",
+      "salience": 84,
+      "description": "I HELP (with nothing after it) means the signer needs help.",
+      "pattern": [
+        {
+          "bind": "s",
+          "gloss": [
+            "I",
+            "ME"
+          ]
+        },
+        {
+          "bind": "h",
+          "gloss": "HELP",
+          "at": "end"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "h",
+          "word": "need",
+          "pos": "verb",
+          "feats": {
+            "transitive": true,
+            "s3": "needs",
+            "ing": "needing"
+          }
+        },
+        {
+          "op": "set",
+          "ref": "h",
+          "pos": "noun"
+        }
+      ],
+      "explain": "'{s} {h}' means the signer needs help, so 'need' was inserted."
+    },
+    {
+      "id": "R18",
+      "name": "can_you_help",
+      "salience": 84,
+      "description": "YOU HELP is a polite request, phrased as a question.",
+      "pattern": [
+        {
+          "bind": "y",
+          "gloss": "YOU",
+          "at": "start"
+        },
+        {
+          "bind": "h",
+          "gloss": "HELP"
+        }
+      ],
+      "unless_facts": [
+        "modal"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "y",
+          "word": "can",
+          "pos": "modal"
+        },
+        {
+          "op": "add_fact",
+          "fact": "question"
+        },
+        {
+          "op": "add_fact",
+          "fact": "modal"
+        }
+      ],
+      "explain": "'{y} {h}' is a polite request, so it was phrased as 'can you help ...?'"
+    },
+    {
+      "id": "R19",
+      "name": "help_object_me",
+      "salience": 83,
+      "description": "HELP with no object means 'help me'.",
+      "pattern": [
+        {
+          "bind": "h",
+          "gloss": "HELP",
+          "pos": "verb",
+          "at": "end"
+        }
+      ],
+      "not_preceded_by": {
+        "gloss": [
+          "I",
+          "ME"
+        ]
+      },
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "h",
+          "word": "me",
+          "pos": "pronoun",
+          "feats": {
+            "person": 1,
+            "number": "sg",
+            "case": "obj"
+          }
+        }
+      ],
+      "explain": "'{h}' has no object; the signer means 'help me'."
+    },
+    {
+      "id": "R20",
+      "name": "implicit_subject_adjective",
+      "salience": 80,
+      "description": "Sign languages often drop the subject; a statement that starts with a describing word is about the signer.",
+      "pattern": [
+        {
+          "bind": "a",
+          "pos": "adjective",
+          "at": "start"
+        }
+      ],
+      "unless_facts": [
+        "yes_no_question"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "a",
+          "word": "I",
+          "pos": "pronoun",
+          "feats": {
+            "person": 1,
+            "number": "sg",
+            "case": "subj",
+            "obj": "me"
+          }
+        }
+      ],
+      "explain": "No subject before '{a}', so the signer ('I') was assumed."
+    },
+    {
+      "id": "R21",
+      "name": "implicit_subject_adjective_question",
+      "salience": 80,
+      "description": "A question that starts with a describing word is asked about the listener.",
+      "pattern": [
+        {
+          "bind": "a",
+          "pos": "adjective",
+          "at": "start"
+        }
+      ],
+      "if_facts": [
+        "yes_no_question"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "a",
+          "word": "you",
+          "pos": "pronoun",
+          "feats": {
+            "person": 2,
+            "number": "sg",
+            "case": "subj",
+            "obj": "you"
+          }
+        }
+      ],
+      "explain": "Question with no subject before '{a}', so the listener ('you') was assumed."
+    },
+    {
+      "id": "R22",
+      "name": "implicit_subject_verb",
+      "salience": 80,
+      "description": "A statement that starts with a verb is about the signer.",
+      "pattern": [
+        {
+          "bind": "v",
+          "pos": "verb",
+          "at": "start",
+          "gloss": {
+            "not": "HELP"
+          }
+        }
+      ],
+      "unless_facts": [
+        "question",
+        "request"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "v",
+          "word": "I",
+          "pos": "pronoun",
+          "feats": {
+            "person": 1,
+            "number": "sg",
+            "case": "subj",
+            "obj": "me"
+          }
+        }
+      ],
+      "explain": "No subject before '{v}', so the signer ('I') was assumed."
+    },
+    {
+      "id": "R23",
+      "name": "implicit_subject_verb_question",
+      "salience": 80,
+      "description": "A yes/no question that starts with a verb is asked about the listener.",
+      "pattern": [
+        {
+          "bind": "v",
+          "pos": "verb",
+          "at": "start",
+          "gloss": {
+            "not": "HELP"
+          }
+        }
+      ],
+      "if_facts": [
+        "yes_no_question"
+      ],
+      "unless_facts": [
+        "modal"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "v",
+          "word": "you",
+          "pos": "pronoun",
+          "feats": {
+            "person": 2,
+            "number": "sg",
+            "case": "subj",
+            "obj": "you"
+          }
+        }
+      ],
+      "explain": "Question with no subject before '{v}', so the listener ('you') was assumed."
+    },
+    {
+      "id": "R24",
+      "name": "object_pronoun",
+      "salience": 79,
+      "description": "A pronoun after a verb takes the object form (help I -> help me).",
+      "pattern": [
+        {
+          "bind": "v",
+          "pos": "verb"
+        },
+        {
+          "bind": "p",
+          "pos": "pronoun",
+          "case": "subj"
+        }
+      ],
+      "actions": [
+        {
+          "op": "set",
+          "ref": "p",
+          "text": "@obj(p)",
+          "feats": {
+            "case": "obj"
+          }
+        }
+      ],
+      "explain": "'{p}' comes after the verb '{v}', so it takes the object form '{p_now}'."
+    },
+    {
+      "id": "R25",
+      "name": "progressive_motion",
+      "salience": 74,
+      "description": "Motion verbs describe what is happening now: 'I am going'.",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": [
+            "pronoun",
+            "noun"
+          ],
+          "case": {
+            "not": "obj"
+          }
+        },
+        {
+          "bind": "v",
+          "pos": "verb",
+          "motion": true
+        }
+      ],
+      "unless_facts": [
+        "question"
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "s",
+          "word": "@be(s)",
+          "pos": "aux",
+          "feats": {
+            "be_aux": true
+          }
+        },
+        {
+          "op": "set",
+          "ref": "v",
+          "text": "@ing(v)",
+          "feats": {
+            "agreed": true
+          }
+        }
+      ],
+      "explain": "Motion verb '{v}' after '{s}' uses the present continuous: '{added} {v_now}'."
+    },
+    {
+      "id": "R26",
+      "name": "copula_insertion",
+      "salience": 73,
+      "description": "Sign languages have no sign for am/is/are; English needs it before a describing word.",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": [
+            "pronoun",
+            "noun"
+          ],
+          "case": {
+            "not": "obj"
+          }
+        },
+        {
+          "bind": "a",
+          "pos": "adjective"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "s",
+          "word": "@be(s)",
+          "pos": "aux",
+          "feats": {
+            "be_aux": true
+          }
+        }
+      ],
+      "explain": "'{s}' + describing word '{a}' needs the verb 'to be': inserted '{added}'."
+    },
+    {
+      "id": "R27",
+      "name": "negate_be",
+      "salience": 72,
+      "description": "Negation with am/is/are: 'not' goes after the verb 'to be'.",
+      "pattern": [
+        {
+          "bind": "b",
+          "be_aux": true
+        }
+      ],
+      "if_facts": [
+        "negated"
+      ],
+      "unless_facts": [
+        "negation_done"
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "b",
+          "word": "not",
+          "pos": "neg"
+        },
+        {
+          "op": "add_fact",
+          "fact": "negation_done"
+        }
+      ],
+      "explain": "The sentence is negated, so 'not' was placed after '{b}'."
+    },
+    {
+      "id": "R28",
+      "name": "do_support_negation",
+      "salience": 71,
+      "description": "English negates an ordinary verb with do/does not.",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": [
+            "pronoun",
+            "noun"
+          ],
+          "case": {
+            "not": "obj"
+          }
+        },
+        {
+          "bind": "v",
+          "pos": "verb"
+        }
+      ],
+      "if_facts": [
+        "negated"
+      ],
+      "unless_facts": [
+        "negation_done"
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "s",
+          "word": "@do(s) not",
+          "pos": [
+            "aux",
+            "neg"
+          ]
+        },
+        {
+          "op": "add_fact",
+          "fact": "negation_done"
+        }
+      ],
+      "explain": "English negates the verb '{v}' with 'do/does not': inserted '{added}'."
+    },
+    {
+      "id": "R29",
+      "name": "third_person_agreement",
+      "salience": 70,
+      "description": "He/she/it + verb takes -s in the present tense.",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": [
+            "pronoun",
+            "noun"
+          ],
+          "person": 3,
+          "number": "sg",
+          "case": {
+            "not": "obj"
+          }
+        },
+        {
+          "bind": "v",
+          "pos": "verb",
+          "agreed": {
+            "not": true
+          }
+        }
+      ],
+      "unless_facts": [
+        "negated",
+        "question"
+      ],
+      "actions": [
+        {
+          "op": "set",
+          "ref": "v",
+          "text": "@s3(v)",
+          "feats": {
+            "agreed": true
+          }
+        }
+      ],
+      "explain": "'{s}' is third person singular, so '{v}' becomes '{v_now}'."
+    },
+    {
+      "id": "R30",
+      "name": "infinitive_to",
+      "salience": 70,
+      "description": "want/need/like + another verb needs 'to'.",
+      "pattern": [
+        {
+          "bind": "w",
+          "pos": "verb",
+          "takes_inf": true
+        },
+        {
+          "bind": "v",
+          "pos": "verb"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "w",
+          "word": "to",
+          "pos": "particle"
+        }
+      ],
+      "explain": "'{w}' followed by the verb '{v}' needs 'to'."
+    },
+    {
+      "id": "R31",
+      "name": "partitive_some",
+      "salience": 69,
+      "description": "want/need + a mass noun reads naturally with 'some'.",
+      "pattern": [
+        {
+          "bind": "w",
+          "gloss": [
+            "WANT",
+            "NEED"
+          ]
+        },
+        {
+          "bind": "n",
+          "pos": "noun",
+          "mass": true
+        }
+      ],
+      "unless_facts": [
+        "negated"
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "w",
+          "word": "some",
+          "pos": "det"
+        }
+      ],
+      "explain": "'{n}' is a mass noun, so 'some' was added."
+    },
+    {
+      "id": "R32",
+      "name": "indefinite_article",
+      "salience": 69,
+      "description": "A countable noun after a verb needs 'a/an'.",
+      "pattern": [
+        {
+          "bind": "v",
+          "pos": [
+            "verb",
+            "aux"
+          ]
+        },
+        {
+          "bind": "n",
+          "pos": "noun",
+          "article": [
+            "a",
+            "an"
+          ],
+          "place": {
+            "not": true
+          }
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "n",
+          "word": "@art(n)",
+          "pos": "det"
+        }
+      ],
+      "explain": "'{n}' is a countable noun, so the article '{added}' was added."
+    },
+    {
+      "id": "R33",
+      "name": "motion_to_place",
+      "salience": 69,
+      "description": "Going to a place needs 'to' (except 'home').",
+      "pattern": [
+        {
+          "bind": "v",
+          "pos": "verb",
+          "motion": true
+        },
+        {
+          "bind": "p",
+          "pos": "noun",
+          "place": true,
+          "bare": {
+            "not": true
+          }
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "p",
+          "word": "to @def(p)",
+          "pos": [
+            "prep",
+            "det"
+          ]
+        }
+      ],
+      "explain": "Going to a place needs 'to': inserted '{added}' before '{p}'."
+    },
+    {
+      "id": "R34",
+      "name": "subject_article",
+      "salience": 68,
+      "description": "A countable noun at the start of a sentence refers to a specific person or thing: 'the'.",
+      "pattern": [
+        {
+          "bind": "n",
+          "pos": "noun",
+          "article": [
+            "a",
+            "an",
+            "the"
+          ],
+          "at": "start"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "n",
+          "word": "the",
+          "pos": "det"
+        }
+      ],
+      "explain": "'{n}' starts the sentence, so 'the' was added."
+    },
+    {
+      "id": "R35",
+      "name": "noun_conjunction",
+      "salience": 66,
+      "description": "Two nouns in a row are a list: 'food and water'.",
+      "pattern": [
+        {
+          "bind": "a",
+          "pos": "noun"
+        },
+        {
+          "bind": "b",
+          "pos": "noun"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "a",
+          "word": "and",
+          "pos": "conj"
+        }
+      ],
+      "explain": "'{a}' and '{b}' were joined with 'and'."
+    },
+    {
+      "id": "R36",
+      "name": "adjective_conjunction",
+      "salience": 66,
+      "description": "Two describing words in a row are joined with 'and'.",
+      "pattern": [
+        {
+          "bind": "a",
+          "pos": "adjective"
+        },
+        {
+          "bind": "b",
+          "pos": "adjective"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "a",
+          "word": "and",
+          "pos": "conj"
+        }
+      ],
+      "explain": "'{a}' and '{b}' were joined with 'and'."
+    },
+    {
+      "id": "R37",
+      "name": "wh_be",
+      "salience": 65,
+      "description": "Question word + thing: 'where is the bathroom?'",
+      "pattern": [
+        {
+          "bind": "w",
+          "pos": "wh",
+          "at": "start"
+        },
+        {
+          "bind": "n",
+          "pos": [
+            "noun",
+            "determiner"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "w",
+          "word": "is @def(n)",
+          "pos": [
+            "aux",
+            "det"
+          ]
+        }
+      ],
+      "explain": "'{w}' + '{n}' forms the question '{w} {added} {n}'."
+    },
+    {
+      "id": "R38",
+      "name": "wh_do_support",
+      "salience": 65,
+      "description": "Question word + subject + verb needs do/does: 'where do you go?'",
+      "pattern": [
+        {
+          "bind": "w",
+          "pos": "wh",
+          "at": "start"
+        },
+        {
+          "bind": "s",
+          "pos": "pronoun",
+          "case": "subj"
+        },
+        {
+          "bind": "v",
+          "pos": "verb"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "w",
+          "word": "@do(s)",
+          "pos": "aux"
+        }
+      ],
+      "explain": "English '{w}' questions need '{added}' before the subject '{s}'."
+    },
+    {
+      "id": "R39",
+      "name": "yes_no_be_inversion",
+      "salience": 64,
+      "description": "Yes/no question with am/is/are: the verb comes first ('are you hungry?').",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": [
+            "pronoun",
+            "noun"
+          ],
+          "case": {
+            "not": "obj"
+          },
+          "at": "start"
+        },
+        {
+          "bind": "b",
+          "be_aux": true
+        }
+      ],
+      "if_facts": [
+        "yes_no_question"
+      ],
+      "actions": [
+        {
+          "op": "reorder",
+          "refs": [
+            "b",
+            "s"
+          ]
+        }
+      ],
+      "explain": "Yes/no question: '{b}' moves before '{s}'."
+    },
+    {
+      "id": "R40",
+      "name": "yes_no_do_support",
+      "salience": 64,
+      "description": "Yes/no question with an ordinary verb starts with do/does ('do you want water?').",
+      "pattern": [
+        {
+          "bind": "s",
+          "pos": [
+            "pronoun",
+            "noun"
+          ],
+          "case": {
+            "not": "obj"
+          },
+          "at": "start"
+        },
+        {
+          "bind": "v",
+          "pos": "verb"
+        }
+      ],
+      "if_facts": [
+        "yes_no_question"
+      ],
+      "unless_facts": [
+        "modal"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "s",
+          "word": "@do(s)",
+          "pos": "aux"
+        }
+      ],
+      "explain": "Yes/no question with the verb '{v}': '{added}' was added before '{s}'."
+    },
+    {
+      "id": "R41",
+      "name": "please_first_in_request",
+      "salience": 60,
+      "description": "In a request, 'please' comes first ('please help me').",
+      "pattern": [
+        {
+          "bind": "p",
+          "gloss": "PLEASE",
+          "not_at": "start"
+        }
+      ],
+      "if_facts": [
+        "request"
+      ],
+      "actions": [
+        {
+          "op": "move",
+          "ref": "p",
+          "to": "clause_start"
+        }
+      ],
+      "explain": "In a request 'please' goes first."
+    },
+    {
+      "id": "R42",
+      "name": "add_please_to_request",
+      "salience": 59,
+      "description": "A request for help is made polite with 'please'.",
+      "pattern": [
+        {
+          "bind": "h",
+          "gloss": "HELP",
+          "at": "start"
+        }
+      ],
+      "if_facts": [
+        "request"
+      ],
+      "forbid_any": [
+        {
+          "gloss": "PLEASE"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "h",
+          "word": "please",
+          "pos": "politeness",
+          "gloss": "PLEASE"
+        }
+      ],
+      "explain": "A request for help is made polite with 'please'."
+    },
+    {
+      "id": "R43",
+      "name": "please_to_end",
+      "salience": 58,
+      "description": "Outside 'help' requests, English puts 'please' at the end ('water, please').",
+      "pattern": [
+        {
+          "bind": "p",
+          "gloss": "PLEASE"
+        },
+        {
+          "bind": "x",
+          "pos": {
+            "not": "punct"
+          }
+        }
+      ],
+      "unless_facts": [
+        "request"
+      ],
+      "actions": [
+        {
+          "op": "move",
+          "ref": "p",
+          "to": "clause_end"
+        }
+      ],
+      "explain": "'please' was moved to the end of the sentence."
+    },
+    {
+      "id": "R44",
+      "name": "comma_before_please",
+      "salience": 57,
+      "description": "A final 'please' is separated by a comma.",
+      "pattern": [
+        {
+          "bind": "x",
+          "pos": {
+            "not": "punct"
+          }
+        },
+        {
+          "bind": "p",
+          "gloss": "PLEASE",
+          "at": "end"
+        }
+      ],
+      "unless_facts": [
+        "request"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "p",
+          "word": ",",
+          "pos": "punct"
+        }
+      ],
+      "explain": "A comma was added before the final 'please'."
+    },
+    {
+      "id": "R45",
+      "name": "greeting_exclamation",
+      "salience": 50,
+      "description": "A greeting at the end of the message ends with '!'.",
+      "pattern": [
+        {
+          "bind": "g",
+          "pos": "greeting",
+          "at": "last"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "g",
+          "word": "!",
+          "pos": "punct"
+        }
+      ],
+      "explain": "Greeting '{g}' ends with '!'."
+    },
+    {
+      "id": "R48",
+      "name": "name_is",
+      "salience": 66,
+      "description": "NAME followed by a fingerspelled name: 'my name is Nancy'.",
+      "pattern": [
+        {
+          "bind": "n",
+          "gloss": "NAME"
+        },
+        {
+          "bind": "x",
+          "pos": "unknown"
+        }
+      ],
+      "actions": [
+        {
+          "op": "insert_after",
+          "ref": "n",
+          "word": "is",
+          "pos": "aux"
+        }
+      ],
+      "explain": "A spelled name after NAME needs 'is': '{n} is {x}'."
+    },
+    {
+      "id": "R46",
+      "name": "negated_noun",
+      "salience": 10,
+      "description": "A negated noun with no verb: WATER NO -> 'no water'.",
+      "pattern": [
+        {
+          "bind": "n",
+          "pos": "noun",
+          "at": "start"
+        }
+      ],
+      "if_facts": [
+        "negated"
+      ],
+      "unless_facts": [
+        "negation_done"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "n",
+          "word": "no",
+          "pos": "det"
+        },
+        {
+          "op": "add_fact",
+          "fact": "negation_done"
+        }
+      ],
+      "explain": "Negated '{n}' without a verb becomes 'no {n}'."
+    },
+    {
+      "id": "R47",
+      "name": "negation_fallback",
+      "salience": 5,
+      "description": "Safety net: negation is never silently lost.",
+      "pattern": [
+        {
+          "bind": "x",
+          "at": "first"
+        }
+      ],
+      "if_facts": [
+        "negated"
+      ],
+      "unless_facts": [
+        "negation_done"
+      ],
+      "actions": [
+        {
+          "op": "insert_before",
+          "ref": "x",
+          "word": "no ,",
+          "pos": [
+            "interjection",
+            "punct"
+          ]
+        },
+        {
+          "op": "add_fact",
+          "fact": "negation_done"
+        }
+      ],
+      "explain": "The negation could not be attached to a verb, so the sentence starts with 'No,'."
+    }
+  ]
+}

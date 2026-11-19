@@ -1,0 +1,62 @@
+{
+  "_about": "Knowledge base of facts about each sign gloss: part of speech (pos), English surface form (text) and grammatical features. The rule engine and the beam-search decoder reason over these facts. Glosses that are not part of the default 15-sign vocabulary are included so that new signs can be added by collecting data only - no code changes.",
+  "entries": {
+    "I":         {"pos": "pronoun", "text": "I",    "person": 1, "number": "sg", "case": "subj", "obj": "me"},
+    "ME":        {"pos": "pronoun", "text": "I",    "person": 1, "number": "sg", "case": "subj", "obj": "me"},
+    "YOU":       {"pos": "pronoun", "text": "you",  "person": 2, "number": "sg", "case": "subj", "obj": "you"},
+    "WE":        {"pos": "pronoun", "text": "we",   "person": 1, "number": "pl", "case": "subj", "obj": "us"},
+    "HE":        {"pos": "pronoun", "text": "he",   "person": 3, "number": "sg", "case": "subj", "obj": "him"},
+    "SHE":       {"pos": "pronoun", "text": "she",  "person": 3, "number": "sg", "case": "subj", "obj": "her"},
+    "THEY":      {"pos": "pronoun", "text": "they", "person": 3, "number": "pl", "case": "subj", "obj": "them"},
+
+    "WANT":      {"pos": "verb", "text": "want",  "transitive": true, "takes_inf": true, "s3": "wants",  "ing": "wanting"},
+    "NEED":      {"pos": "verb", "text": "need",  "transitive": true, "takes_inf": true, "s3": "needs",  "ing": "needing"},
+    "LIKE":      {"pos": "verb", "text": "like",  "transitive": true, "takes_inf": true, "s3": "likes",  "ing": "liking"},
+    "EAT":       {"pos": "verb", "text": "eat",   "transitive": true, "s3": "eats",   "ing": "eating"},
+    "DRINK":     {"pos": "verb", "text": "drink", "transitive": true, "s3": "drinks", "ing": "drinking"},
+    "HELP":      {"pos": "verb", "text": "help",  "transitive": true, "s3": "helps",  "ing": "helping"},
+    "GO":        {"pos": "verb", "text": "go",    "motion": true, "s3": "goes",  "ing": "going"},
+    "COME":      {"pos": "verb", "text": "come",  "motion": true, "s3": "comes", "ing": "coming"},
+    "SLEEP":     {"pos": "verb", "text": "sleep", "s3": "sleeps", "ing": "sleeping"},
+
+    "HUNGRY":    {"pos": "adjective", "text": "hungry"},
+    "THIRSTY":   {"pos": "adjective", "text": "thirsty"},
+    "TIRED":     {"pos": "adjective", "text": "tired"},
+    "HAPPY":     {"pos": "adjective", "text": "happy"},
+    "SAD":       {"pos": "adjective", "text": "sad"},
+    "SICK":      {"pos": "adjective", "text": "sick"},
+    "GOOD":      {"pos": "adjective", "text": "good"},
+    "FINE":      {"pos": "adjective", "text": "fine"},
+    "SORRY":     {"pos": "adjective", "text": "sorry"},
+
+    "WATER":     {"pos": "noun", "text": "water",    "mass": true},
+    "FOOD":      {"pos": "noun", "text": "food",     "mass": true},
+    "MEDICINE":  {"pos": "noun", "text": "medicine", "mass": true},
+    "HOME":      {"pos": "noun", "text": "home",     "place": true, "bare": true},
+    "SCHOOL":    {"pos": "noun", "text": "school",   "place": true},
+    "BATHROOM":  {"pos": "noun", "text": "bathroom", "place": true, "article": "the"},
+    "HOSPITAL":  {"pos": "noun", "text": "hospital", "place": true, "article": "the"},
+    "DOCTOR":    {"pos": "noun", "text": "doctor",   "article": "a", "animate": true},
+    "FRIEND":    {"pos": "noun", "text": "friend",   "article": "a", "animate": true},
+    "BOOK":      {"pos": "noun", "text": "book",     "article": "a"},
+    "NAME":      {"pos": "noun", "text": "name"},
+
+    "MY":        {"pos": "determiner", "text": "my"},
+    "YOUR":      {"pos": "determiner", "text": "your"},
+
+    "HELLO":     {"pos": "greeting", "text": "hello"},
+    "BYE":       {"pos": "greeting", "text": "goodbye"},
+    "THANK_YOU": {"pos": "formula",  "text": "thank you"},
+    "PLEASE":    {"pos": "politeness", "text": "please"},
+    "YES":       {"pos": "interjection", "text": "yes"},
+    "NO":        {"pos": "interjection", "text": "no", "neg": true},
+    "OK":        {"pos": "interjection", "text": "okay"},
+    "NOT":       {"pos": "negation", "text": "not", "neg": true},
+
+    "WHERE":     {"pos": "wh", "text": "where"},
+    "WHAT":      {"pos": "wh", "text": "what"},
+    "WHO":       {"pos": "wh", "text": "who"},
+
+    "QUESTION":  {"pos": "marker", "text": "?"}
+  }
+}

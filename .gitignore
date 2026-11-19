@@ -1,0 +1,24 @@
+# Python / tools
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Local caches and temporary files (kept on the project drive)
+.cache/
+.scratch/
+
+# Machine-specific settings and logs
+settings.json
+*.log
+data/history.csv
+# Recorded hand landmarks of real people stay on this laptop (privacy)
+data/raw/
+# Word's lock file while the report is open
+~$*
+
+# Models are rebuilt with `python -m gesturebridge.train`; the MediaPipe model downloads itself.
+# Remove these two lines if you want to publish your trained model with the repo.
+models/*.joblib
+models/*.task

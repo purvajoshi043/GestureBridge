@@ -1,0 +1,1797 @@
+{
+  "backend": "ollama",
+  "model": "llama3.2:3b",
+  "cases": 59,
+  "summary": {
+    "zero_shot": {
+      "guard_pass_rate": 0.7457627118644068,
+      "raw_llm_correct": 0.711864406779661,
+      "final_correct": 0.9661016949152542,
+      "mean_latency_ms": 706.2257186440023
+    },
+    "few_shot": {
+      "guard_pass_rate": 0.9661016949152542,
+      "raw_llm_correct": 0.9661016949152542,
+      "final_correct": 1.0,
+      "mean_latency_ms": 648.3233745762476
+    },
+    "few_shot_strict": {
+      "guard_pass_rate": 1.0,
+      "raw_llm_correct": 1.0,
+      "final_correct": 1.0,
+      "mean_latency_ms": 666.2325576271079
+    }
+  },
+  "rows": [
+    {
+      "style": "zero_shot",
+      "glosses": "I HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YOU HUNGRY",
+      "draft": "You are hungry.",
+      "llm_raw": "You are hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I SORRY",
+      "draft": "I am sorry.",
+      "llm_raw": "I am sorry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "SORRY",
+      "draft": "I am sorry.",
+      "llm_raw": "I am sorry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I WANT WATER",
+      "draft": "I want some water.",
+      "llm_raw": "I want some water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "WATER I WANT",
+      "draft": "I want some water.",
+      "llm_raw": "I'd like some water.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": false,
+      "final_correct": false
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I WATER WANT",
+      "draft": "I want some water.",
+      "llm_raw": "I want some water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "WANT WATER",
+      "draft": "I want some water.",
+      "llm_raw": "I want some water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "FOOD WANT",
+      "draft": "I want some food.",
+      "llm_raw": "I'm hungry and I want some food.",
+      "status": "rejected",
+      "reason": "the LLM added new meaning: 'hungry'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I WANT FOOD WATER",
+      "draft": "I want some food and water.",
+      "llm_raw": "I want some food and water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I HUNGRY NO",
+      "draft": "I am not hungry.",
+      "llm_raw": "I am not hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HUNGRY NO",
+      "draft": "I am not hungry.",
+      "llm_raw": "I am not hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I WANT FOOD NO",
+      "draft": "I do not want food.",
+      "llm_raw": "I don't want any food.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": false,
+      "final_correct": false
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "WATER NO",
+      "draft": "No water.",
+      "llm_raw": "There is no water.",
+      "status": "rejected",
+      "reason": "the LLM added new meaning: 'there'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HELP",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HELP PLEASE",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "PLEASE HELP",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HELP I",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I HELP",
+      "draft": "I need help.",
+      "llm_raw": "I need help.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YOU HELP I",
+      "draft": "Can you help me?",
+      "llm_raw": "Can you help me?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YOU HELP I PLEASE",
+      "draft": "Can you help me, please?",
+      "llm_raw": "Can you help me, please?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I GO HOME",
+      "draft": "I am going home.",
+      "llm_raw": "I am going home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HOME GO",
+      "draft": "I am going home.",
+      "llm_raw": "I am going home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I HOME GO",
+      "draft": "I am going home.",
+      "llm_raw": "I am going home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I GO HOME NO",
+      "draft": "I am not going home.",
+      "llm_raw": "I am not going home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I WANT GO HOME",
+      "draft": "I want to go home.",
+      "llm_raw": "I want to go home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HELLO",
+      "draft": "Hello!",
+      "llm_raw": "The most basic and common greeting in English is simply \"Hello\".",
+      "status": "rejected",
+      "reason": "the LLM made the sentence much longer (11 words)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HELLO I HUNGRY",
+      "draft": "Hello! I am hungry.",
+      "llm_raw": "Hello, I'm hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HELLO HELP",
+      "draft": "Hello! Please help me.",
+      "llm_raw": "A distressed person is seeking assistance by writing \"HELLO HELP\" in a draft.",
+      "status": "rejected",
+      "reason": "the LLM made the sentence much longer (13 words)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "THANK_YOU",
+      "draft": "Thank you.",
+      "llm_raw": "The polite way to express gratitude is simply \"Thank you.\"",
+      "status": "rejected",
+      "reason": "the LLM made the sentence much longer (10 words)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "THANK_YOU YOU",
+      "draft": "Thank you.",
+      "llm_raw": "The correct sentence is: Thank you.",
+      "status": "rejected",
+      "reason": "the LLM added new meaning: 'correct', 'sentence'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YES",
+      "draft": "Yes.",
+      "llm_raw": "The draft is approved.",
+      "status": "rejected",
+      "reason": "the LLM dropped meaning words: 'yes'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "NO",
+      "draft": "No.",
+      "llm_raw": "There are no signs to indicate a draft.",
+      "status": "rejected",
+      "reason": "the LLM made the sentence much longer (8 words)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YES PLEASE",
+      "draft": "Yes, please.",
+      "llm_raw": "Yes, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "NO THANK_YOU",
+      "draft": "No, thank you.",
+      "llm_raw": "The polite response to a \"No, thank you\" is simply \"No, thank you\".",
+      "status": "rejected",
+      "reason": "the LLM made the sentence much longer (13 words)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YES I HUNGRY",
+      "draft": "Yes, I am hungry.",
+      "llm_raw": "I'm hungry.",
+      "status": "rejected",
+      "reason": "the LLM dropped meaning words: 'yes'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I WANT WATER PLEASE",
+      "draft": "I want some water, please.",
+      "llm_raw": "I want some water, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "PLEASE WATER",
+      "draft": "Water, please.",
+      "llm_raw": "The sign should read \"Water, please.\"",
+      "status": "rejected",
+      "reason": "the LLM added new meaning: 'read', 'sign'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "WATER PLEASE",
+      "draft": "Water, please.",
+      "llm_raw": "Can I get you some water?",
+      "status": "rejected",
+      "reason": "the LLM changed the sentence type (question vs statement)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I I HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YOU HUNGRY QUESTION",
+      "draft": "Are you hungry?",
+      "llm_raw": "Are you hungry?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HUNGRY QUESTION",
+      "draft": "Are you hungry?",
+      "llm_raw": "Are you hungry?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YOU WANT WATER QUESTION",
+      "draft": "Do you want some water?",
+      "llm_raw": "Do you want some water?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "WATER YOU WANT QUESTION",
+      "draft": "Do you want some water?",
+      "llm_raw": "Do you want some water?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I NO HUNGRY",
+      "draft": "I am not hungry.",
+      "llm_raw": "I am not hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I THIRSTY",
+      "draft": "I am thirsty.",
+      "llm_raw": "I am thirsty.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I HUNGRY THIRSTY",
+      "draft": "I am hungry and thirsty.",
+      "llm_raw": "I am hungry and thirsty.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "HE WANT FOOD",
+      "draft": "He wants some food.",
+      "llm_raw": "He wants some food.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "SHE SICK",
+      "draft": "She is sick.",
+      "llm_raw": "She is sick.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "WE GO SCHOOL",
+      "draft": "We are going to school.",
+      "llm_raw": "We are going to school.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I GO BATHROOM",
+      "draft": "I am going to the bathroom.",
+      "llm_raw": "I am going to the bathroom.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "BATHROOM WHERE",
+      "draft": "Where is the bathroom?",
+      "llm_raw": "The bathroom is located behind the door.",
+      "status": "rejected",
+      "reason": "the LLM changed the sentence type (question vs statement)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "YOU GO WHERE",
+      "draft": "Where do you go?",
+      "llm_raw": "You go where you want to go.",
+      "status": "rejected",
+      "reason": "the LLM changed the sentence type (question vs statement)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "WHAT YOUR NAME",
+      "draft": "What is your name?",
+      "llm_raw": "What is your name?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I NEED DOCTOR",
+      "draft": "I need a doctor.",
+      "llm_raw": "I need a doctor.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "DOCTOR COME",
+      "draft": "The doctor is coming.",
+      "llm_raw": "The doctor is coming.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I LIKE YOU",
+      "draft": "I like you.",
+      "llm_raw": "I like you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "zero_shot",
+      "glosses": "I HELP NO",
+      "draft": "I do not need help.",
+      "llm_raw": "I don't need any assistance.",
+      "status": "rejected",
+      "reason": "the LLM dropped meaning words: 'help'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I'm hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YOU HUNGRY",
+      "draft": "You are hungry.",
+      "llm_raw": "You're hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I'm hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I SORRY",
+      "draft": "I am sorry.",
+      "llm_raw": "I'm sorry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "SORRY",
+      "draft": "I am sorry.",
+      "llm_raw": "I'm sorry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I WANT WATER",
+      "draft": "I want some water.",
+      "llm_raw": "I want water.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "WATER I WANT",
+      "draft": "I want some water.",
+      "llm_raw": "I want water.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I WATER WANT",
+      "draft": "I want some water.",
+      "llm_raw": "I want water.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "WANT WATER",
+      "draft": "I want some water.",
+      "llm_raw": "I want water.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "FOOD WANT",
+      "draft": "I want some food.",
+      "llm_raw": "I want some food.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I WANT FOOD WATER",
+      "draft": "I want some food and water.",
+      "llm_raw": "I want food and water.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I HUNGRY NO",
+      "draft": "I am not hungry.",
+      "llm_raw": "I'm not hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HUNGRY NO",
+      "draft": "I am not hungry.",
+      "llm_raw": "I'm not hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I WANT FOOD NO",
+      "draft": "I do not want food.",
+      "llm_raw": "I don't want food.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "WATER NO",
+      "draft": "No water.",
+      "llm_raw": "No water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HELP",
+      "draft": "Please help me.",
+      "llm_raw": "Help me.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HELP PLEASE",
+      "draft": "Please help me.",
+      "llm_raw": "Help me, please.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "PLEASE HELP",
+      "draft": "Please help me.",
+      "llm_raw": "Help me, please.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HELP I",
+      "draft": "Please help me.",
+      "llm_raw": "Help me.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I HELP",
+      "draft": "I need help.",
+      "llm_raw": "I need help.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YOU HELP I",
+      "draft": "Can you help me?",
+      "llm_raw": "Can you help me?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YOU HELP I PLEASE",
+      "draft": "Can you help me, please?",
+      "llm_raw": "Can you help me, please?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I GO HOME",
+      "draft": "I am going home.",
+      "llm_raw": "I'm going home.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HOME GO",
+      "draft": "I am going home.",
+      "llm_raw": "I'm going home.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I HOME GO",
+      "draft": "I am going home.",
+      "llm_raw": "I'm going home.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I GO HOME NO",
+      "draft": "I am not going home.",
+      "llm_raw": "I'm not going home.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I WANT GO HOME",
+      "draft": "I want to go home.",
+      "llm_raw": "I want to go home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HELLO",
+      "draft": "Hello!",
+      "llm_raw": "Hello.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HELLO I HUNGRY",
+      "draft": "Hello! I am hungry.",
+      "llm_raw": "Hello, I'm hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HELLO HELP",
+      "draft": "Hello! Please help me.",
+      "llm_raw": "Hello, help!",
+      "status": "rejected",
+      "reason": "the LLM dropped meaning words: 'me'",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "THANK_YOU",
+      "draft": "Thank you.",
+      "llm_raw": "Thank you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "THANK_YOU YOU",
+      "draft": "Thank you.",
+      "llm_raw": "Thank you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YES",
+      "draft": "Yes.",
+      "llm_raw": "Yes.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "NO",
+      "draft": "No.",
+      "llm_raw": "No.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YES PLEASE",
+      "draft": "Yes, please.",
+      "llm_raw": "Yes, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "NO THANK_YOU",
+      "draft": "No, thank you.",
+      "llm_raw": "No, thank you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YES I HUNGRY",
+      "draft": "Yes, I am hungry.",
+      "llm_raw": "Yes, I'm hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I WANT WATER PLEASE",
+      "draft": "I want some water, please.",
+      "llm_raw": "I want water, please.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "PLEASE WATER",
+      "draft": "Water, please.",
+      "llm_raw": "Can I have some water?",
+      "status": "rejected",
+      "reason": "the LLM changed the sentence type (question vs statement)",
+      "raw_correct": false,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "WATER PLEASE",
+      "draft": "Water, please.",
+      "llm_raw": "Water, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I I HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I'm hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YOU HUNGRY QUESTION",
+      "draft": "Are you hungry?",
+      "llm_raw": "Are you hungry?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HUNGRY QUESTION",
+      "draft": "Are you hungry?",
+      "llm_raw": "Are you hungry?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YOU WANT WATER QUESTION",
+      "draft": "Do you want some water?",
+      "llm_raw": "Do you want some water?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "WATER YOU WANT QUESTION",
+      "draft": "Do you want some water?",
+      "llm_raw": "Do you want some water?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I NO HUNGRY",
+      "draft": "I am not hungry.",
+      "llm_raw": "I'm not hungry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I THIRSTY",
+      "draft": "I am thirsty.",
+      "llm_raw": "I'm thirsty.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I HUNGRY THIRSTY",
+      "draft": "I am hungry and thirsty.",
+      "llm_raw": "I'm hungry and thirsty.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "HE WANT FOOD",
+      "draft": "He wants some food.",
+      "llm_raw": "He wants food.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "SHE SICK",
+      "draft": "She is sick.",
+      "llm_raw": "She is sick.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "WE GO SCHOOL",
+      "draft": "We are going to school.",
+      "llm_raw": "We're going to school.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I GO BATHROOM",
+      "draft": "I am going to the bathroom.",
+      "llm_raw": "I'm going to the bathroom.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "BATHROOM WHERE",
+      "draft": "Where is the bathroom?",
+      "llm_raw": "Where is the bathroom?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "YOU GO WHERE",
+      "draft": "Where do you go?",
+      "llm_raw": "Where do you go?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "WHAT YOUR NAME",
+      "draft": "What is your name?",
+      "llm_raw": "What's your name?",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I NEED DOCTOR",
+      "draft": "I need a doctor.",
+      "llm_raw": "I need a doctor.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "DOCTOR COME",
+      "draft": "The doctor is coming.",
+      "llm_raw": "The doctor is coming.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I LIKE YOU",
+      "draft": "I like you.",
+      "llm_raw": "I like you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot",
+      "glosses": "I HELP NO",
+      "draft": "I do not need help.",
+      "llm_raw": "I don't need help.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YOU HUNGRY",
+      "draft": "You are hungry.",
+      "llm_raw": "You are hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I SORRY",
+      "draft": "I am sorry.",
+      "llm_raw": "I am sorry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "SORRY",
+      "draft": "I am sorry.",
+      "llm_raw": "I'm sorry.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I WANT WATER",
+      "draft": "I want some water.",
+      "llm_raw": "I want some water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "WATER I WANT",
+      "draft": "I want some water.",
+      "llm_raw": "I want some water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I WATER WANT",
+      "draft": "I want some water.",
+      "llm_raw": "I want some water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "WANT WATER",
+      "draft": "I want some water.",
+      "llm_raw": "I want some water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "FOOD WANT",
+      "draft": "I want some food.",
+      "llm_raw": "I want some food.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I WANT FOOD WATER",
+      "draft": "I want some food and water.",
+      "llm_raw": "I want some food and water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I HUNGRY NO",
+      "draft": "I am not hungry.",
+      "llm_raw": "I am not hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HUNGRY NO",
+      "draft": "I am not hungry.",
+      "llm_raw": "I am not hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I WANT FOOD NO",
+      "draft": "I do not want food.",
+      "llm_raw": "I don't want food.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "WATER NO",
+      "draft": "No water.",
+      "llm_raw": "No water.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HELP",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HELP PLEASE",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "PLEASE HELP",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HELP I",
+      "draft": "Please help me.",
+      "llm_raw": "Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I HELP",
+      "draft": "I need help.",
+      "llm_raw": "I need help.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YOU HELP I",
+      "draft": "Can you help me?",
+      "llm_raw": "Can you help me?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YOU HELP I PLEASE",
+      "draft": "Can you help me, please?",
+      "llm_raw": "Can you help me, please?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I GO HOME",
+      "draft": "I am going home.",
+      "llm_raw": "I am going home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HOME GO",
+      "draft": "I am going home.",
+      "llm_raw": "I'm going home.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I HOME GO",
+      "draft": "I am going home.",
+      "llm_raw": "I am going home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I GO HOME NO",
+      "draft": "I am not going home.",
+      "llm_raw": "I am not going home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I WANT GO HOME",
+      "draft": "I want to go home.",
+      "llm_raw": "I want to go home.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HELLO",
+      "draft": "Hello!",
+      "llm_raw": "Hello!",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HELLO I HUNGRY",
+      "draft": "Hello! I am hungry.",
+      "llm_raw": "Hello! I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HELLO HELP",
+      "draft": "Hello! Please help me.",
+      "llm_raw": "Hello! Please help me.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "THANK_YOU",
+      "draft": "Thank you.",
+      "llm_raw": "Thank you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "THANK_YOU YOU",
+      "draft": "Thank you.",
+      "llm_raw": "Thank you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YES",
+      "draft": "Yes.",
+      "llm_raw": "Yes.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "NO",
+      "draft": "No.",
+      "llm_raw": "No.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YES PLEASE",
+      "draft": "Yes, please.",
+      "llm_raw": "Yes, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "NO THANK_YOU",
+      "draft": "No, thank you.",
+      "llm_raw": "No, thank you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YES I HUNGRY",
+      "draft": "Yes, I am hungry.",
+      "llm_raw": "Yes, I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I WANT WATER PLEASE",
+      "draft": "I want some water, please.",
+      "llm_raw": "I want some water, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "PLEASE WATER",
+      "draft": "Water, please.",
+      "llm_raw": "Water, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "WATER PLEASE",
+      "draft": "Water, please.",
+      "llm_raw": "Water, please.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I I HUNGRY",
+      "draft": "I am hungry.",
+      "llm_raw": "I am hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YOU HUNGRY QUESTION",
+      "draft": "Are you hungry?",
+      "llm_raw": "Are you hungry?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HUNGRY QUESTION",
+      "draft": "Are you hungry?",
+      "llm_raw": "Are you hungry?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YOU WANT WATER QUESTION",
+      "draft": "Do you want some water?",
+      "llm_raw": "Do you want some water?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "WATER YOU WANT QUESTION",
+      "draft": "Do you want some water?",
+      "llm_raw": "Do you want some water?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I NO HUNGRY",
+      "draft": "I am not hungry.",
+      "llm_raw": "I am not hungry.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I THIRSTY",
+      "draft": "I am thirsty.",
+      "llm_raw": "I am thirsty.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I HUNGRY THIRSTY",
+      "draft": "I am hungry and thirsty.",
+      "llm_raw": "I am hungry and thirsty.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "HE WANT FOOD",
+      "draft": "He wants some food.",
+      "llm_raw": "He wants some food.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "SHE SICK",
+      "draft": "She is sick.",
+      "llm_raw": "She is sick.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "WE GO SCHOOL",
+      "draft": "We are going to school.",
+      "llm_raw": "We are going to school.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I GO BATHROOM",
+      "draft": "I am going to the bathroom.",
+      "llm_raw": "I am going to the bathroom.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "BATHROOM WHERE",
+      "draft": "Where is the bathroom?",
+      "llm_raw": "Where is the bathroom?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "YOU GO WHERE",
+      "draft": "Where do you go?",
+      "llm_raw": "Where do you go?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "WHAT YOUR NAME",
+      "draft": "What is your name?",
+      "llm_raw": "What is your name?",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I NEED DOCTOR",
+      "draft": "I need a doctor.",
+      "llm_raw": "I need a doctor.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "DOCTOR COME",
+      "draft": "The doctor is coming.",
+      "llm_raw": "The doctor is coming.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I LIKE YOU",
+      "draft": "I like you.",
+      "llm_raw": "I like you.",
+      "status": "unchanged",
+      "reason": "draft was already natural",
+      "raw_correct": true,
+      "final_correct": true
+    },
+    {
+      "style": "few_shot_strict",
+      "glosses": "I HELP NO",
+      "draft": "I do not need help.",
+      "llm_raw": "I don't need help.",
+      "status": "ok",
+      "reason": "meaning preserved",
+      "raw_correct": true,
+      "final_correct": true
+    }
+  ]
+}

@@ -1,0 +1,1403 @@
+{
+  "cases": 59,
+  "default_only": false,
+  "use_llm": true,
+  "rule_accuracy": 1.0,
+  "rule_mean_wer": 0.0,
+  "by_category": {
+    "agreement": {
+      "cases": 1,
+      "rule_correct": 1
+    },
+    "article": {
+      "cases": 2,
+      "rule_correct": 2
+    },
+    "clean-up": {
+      "cases": 1,
+      "rule_correct": 1
+    },
+    "conjunction": {
+      "cases": 2,
+      "rule_correct": 2
+    },
+    "copula": {
+      "cases": 5,
+      "rule_correct": 5
+    },
+    "formula": {
+      "cases": 2,
+      "rule_correct": 2
+    },
+    "greeting": {
+      "cases": 3,
+      "rule_correct": 3
+    },
+    "implicit subject": {
+      "cases": 3,
+      "rule_correct": 3
+    },
+    "infinitive": {
+      "cases": 1,
+      "rule_correct": 1
+    },
+    "motion": {
+      "cases": 3,
+      "rule_correct": 3
+    },
+    "negation": {
+      "cases": 7,
+      "rule_correct": 7
+    },
+    "object pronoun": {
+      "cases": 1,
+      "rule_correct": 1
+    },
+    "partitive": {
+      "cases": 1,
+      "rule_correct": 1
+    },
+    "politeness": {
+      "cases": 3,
+      "rule_correct": 3
+    },
+    "reply": {
+      "cases": 5,
+      "rule_correct": 5
+    },
+    "request": {
+      "cases": 7,
+      "rule_correct": 7
+    },
+    "wh-question": {
+      "cases": 3,
+      "rule_correct": 3
+    },
+    "word order": {
+      "cases": 2,
+      "rule_correct": 2
+    },
+    "word order (SOV)": {
+      "cases": 2,
+      "rule_correct": 2
+    },
+    "word order (topic)": {
+      "cases": 1,
+      "rule_correct": 1
+    },
+    "yes/no question": {
+      "cases": 4,
+      "rule_correct": 4
+    }
+  },
+  "rules_used": {
+    "R26": 16,
+    "R31": 10,
+    "R25": 7,
+    "R07": 6,
+    "R27": 4,
+    "R15": 4,
+    "R19": 4,
+    "R24": 4,
+    "R44": 4,
+    "R06": 4,
+    "R20": 3,
+    "R22": 3,
+    "R42": 3,
+    "R05": 3,
+    "R10": 2,
+    "R28": 2,
+    "R17": 2,
+    "R18": 2,
+    "R14": 2,
+    "R03": 2,
+    "R39": 2,
+    "R40": 2,
+    "R33": 2,
+    "R11": 2,
+    "R37": 2,
+    "R09": 1,
+    "R13": 1,
+    "R35": 1,
+    "R46": 1,
+    "R41": 1,
+    "R16": 1,
+    "R30": 1,
+    "R45": 1,
+    "R02": 1,
+    "R43": 1,
+    "R01": 1,
+    "R21": 1,
+    "R08": 1,
+    "R36": 1,
+    "R29": 1,
+    "R38": 1,
+    "R12": 1,
+    "R32": 1,
+    "R34": 1
+  },
+  "rows": [
+    {
+      "glosses": "I HUNGRY",
+      "category": "copula",
+      "expected": [
+        "I am hungry."
+      ],
+      "rule_sentence": "I am hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R26"
+      ],
+      "rules_ms": 0.432,
+      "final_sentence": "I'm hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 751.9
+    },
+    {
+      "glosses": "YOU HUNGRY",
+      "category": "copula",
+      "expected": [
+        "You are hungry."
+      ],
+      "rule_sentence": "You are hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R26"
+      ],
+      "rules_ms": 0.618,
+      "final_sentence": "You're hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "You're hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 568.6
+    },
+    {
+      "glosses": "HUNGRY",
+      "category": "implicit subject",
+      "expected": [
+        "I am hungry."
+      ],
+      "rule_sentence": "I am hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R20",
+        "R26"
+      ],
+      "rules_ms": 0.607,
+      "final_sentence": "I'm hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 570.5
+    },
+    {
+      "glosses": "I SORRY",
+      "category": "copula",
+      "expected": [
+        "I am sorry."
+      ],
+      "rule_sentence": "I am sorry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R26"
+      ],
+      "rules_ms": 0.459,
+      "final_sentence": "I'm sorry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm sorry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 454.8
+    },
+    {
+      "glosses": "SORRY",
+      "category": "implicit subject",
+      "expected": [
+        "I am sorry."
+      ],
+      "rule_sentence": "I am sorry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R20",
+        "R26"
+      ],
+      "rules_ms": 0.638,
+      "final_sentence": "I'm sorry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm sorry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 857.5
+    },
+    {
+      "glosses": "I WANT WATER",
+      "category": "partitive",
+      "expected": [
+        "I want some water.",
+        "I want water."
+      ],
+      "rule_sentence": "I want some water.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R31"
+      ],
+      "rules_ms": 0.576,
+      "final_sentence": "I want water.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I want water.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 972.2
+    },
+    {
+      "glosses": "WATER I WANT",
+      "category": "word order (topic)",
+      "expected": [
+        "I want some water.",
+        "I want water."
+      ],
+      "rule_sentence": "I want some water.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R10",
+        "R31"
+      ],
+      "rules_ms": 1.413,
+      "final_sentence": "I want water.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I want water.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 876.5
+    },
+    {
+      "glosses": "I WATER WANT",
+      "category": "word order (SOV)",
+      "expected": [
+        "I want some water.",
+        "I want water."
+      ],
+      "rule_sentence": "I want some water.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R09",
+        "R31"
+      ],
+      "rules_ms": 1.828,
+      "final_sentence": "I want water.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I want water.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 538.1
+    },
+    {
+      "glosses": "WANT WATER",
+      "category": "implicit subject",
+      "expected": [
+        "I want some water.",
+        "I want water."
+      ],
+      "rule_sentence": "I want some water.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R22",
+        "R31"
+      ],
+      "rules_ms": 0.75,
+      "final_sentence": "I want water.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I want water.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 484.9
+    },
+    {
+      "glosses": "FOOD WANT",
+      "category": "word order",
+      "expected": [
+        "I want some food.",
+        "I want food."
+      ],
+      "rule_sentence": "I want some food.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R13",
+        "R22",
+        "R31"
+      ],
+      "rules_ms": 0.74,
+      "final_sentence": "I want food.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I want food.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 726.1
+    },
+    {
+      "glosses": "I WANT FOOD WATER",
+      "category": "conjunction",
+      "expected": [
+        "I want some food and water.",
+        "I want food and water."
+      ],
+      "rule_sentence": "I want some food and water.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R31",
+        "R35"
+      ],
+      "rules_ms": 1.12,
+      "final_sentence": "I want food and water.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I want food and water.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 632.6
+    },
+    {
+      "glosses": "I HUNGRY NO",
+      "category": "negation",
+      "expected": [
+        "I am not hungry."
+      ],
+      "rule_sentence": "I am not hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R07",
+        "R26",
+        "R27"
+      ],
+      "rules_ms": 1.06,
+      "final_sentence": "I'm not hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm not hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 552.4
+    },
+    {
+      "glosses": "HUNGRY NO",
+      "category": "negation",
+      "expected": [
+        "I am not hungry."
+      ],
+      "rule_sentence": "I am not hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R07",
+        "R20",
+        "R26",
+        "R27"
+      ],
+      "rules_ms": 1.004,
+      "final_sentence": "I'm not hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm not hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 552.3
+    },
+    {
+      "glosses": "I WANT FOOD NO",
+      "category": "negation",
+      "expected": [
+        "I do not want food."
+      ],
+      "rule_sentence": "I do not want food.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R07",
+        "R28"
+      ],
+      "rules_ms": 1.074,
+      "final_sentence": "I don't want food.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I don't want food.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 872.1
+    },
+    {
+      "glosses": "WATER NO",
+      "category": "negation",
+      "expected": [
+        "No water."
+      ],
+      "rule_sentence": "No water.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R07",
+        "R46"
+      ],
+      "rules_ms": 0.578,
+      "final_sentence": "No water.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "No water.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 485.6
+    },
+    {
+      "glosses": "HELP",
+      "category": "request",
+      "expected": [
+        "Please help me.",
+        "Help me.",
+        "Help me, please."
+      ],
+      "rule_sentence": "Please help me.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R15",
+        "R19",
+        "R42"
+      ],
+      "rules_ms": 0.763,
+      "final_sentence": "Help me.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "Help me.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 693.3
+    },
+    {
+      "glosses": "HELP PLEASE",
+      "category": "request",
+      "expected": [
+        "Please help me.",
+        "Help me, please.",
+        "Help me."
+      ],
+      "rule_sentence": "Please help me.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R15",
+        "R41",
+        "R19"
+      ],
+      "rules_ms": 1.432,
+      "final_sentence": "Help me, please.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "Help me, please.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 611.0
+    },
+    {
+      "glosses": "PLEASE HELP",
+      "category": "request",
+      "expected": [
+        "Please help me.",
+        "Help me, please.",
+        "Help me."
+      ],
+      "rule_sentence": "Please help me.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R16",
+        "R19"
+      ],
+      "rules_ms": 0.611,
+      "final_sentence": "Help me.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "Help me.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 554.7
+    },
+    {
+      "glosses": "HELP I",
+      "category": "request",
+      "expected": [
+        "Please help me.",
+        "Help me.",
+        "Help me, please."
+      ],
+      "rule_sentence": "Please help me.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R15",
+        "R24",
+        "R42"
+      ],
+      "rules_ms": 0.763,
+      "final_sentence": "Help me.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "Help me.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 423.8
+    },
+    {
+      "glosses": "I HELP",
+      "category": "request",
+      "expected": [
+        "I need help."
+      ],
+      "rule_sentence": "I need help.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R17"
+      ],
+      "rules_ms": 0.456,
+      "final_sentence": "I need help.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "I need help.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 590.4
+    },
+    {
+      "glosses": "YOU HELP I",
+      "category": "request",
+      "expected": [
+        "Can you help me?"
+      ],
+      "rule_sentence": "Can you help me?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R18",
+        "R24"
+      ],
+      "rules_ms": 0.83,
+      "final_sentence": "Can you help me?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Can you help me?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 490.8
+    },
+    {
+      "glosses": "YOU HELP I PLEASE",
+      "category": "request",
+      "expected": [
+        "Can you help me, please?"
+      ],
+      "rule_sentence": "Can you help me, please?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R18",
+        "R24",
+        "R44"
+      ],
+      "rules_ms": 1.103,
+      "final_sentence": "Can you help me, please?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Can you help me, please?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 1329.2
+    },
+    {
+      "glosses": "I GO HOME",
+      "category": "motion",
+      "expected": [
+        "I am going home."
+      ],
+      "rule_sentence": "I am going home.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R25"
+      ],
+      "rules_ms": 0.821,
+      "final_sentence": "I'm going home.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm going home.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 803.8
+    },
+    {
+      "glosses": "HOME GO",
+      "category": "word order",
+      "expected": [
+        "I am going home."
+      ],
+      "rule_sentence": "I am going home.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R14",
+        "R22",
+        "R25"
+      ],
+      "rules_ms": 0.944,
+      "final_sentence": "I'm going home.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm going home.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 883.1
+    },
+    {
+      "glosses": "I HOME GO",
+      "category": "word order (SOV)",
+      "expected": [
+        "I am going home."
+      ],
+      "rule_sentence": "I am going home.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R14",
+        "R25"
+      ],
+      "rules_ms": 1.398,
+      "final_sentence": "I'm going home.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm going home.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 615.8
+    },
+    {
+      "glosses": "I GO HOME NO",
+      "category": "negation",
+      "expected": [
+        "I am not going home."
+      ],
+      "rule_sentence": "I am not going home.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R07",
+        "R25",
+        "R27"
+      ],
+      "rules_ms": 1.352,
+      "final_sentence": "I'm not going home.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm not going home.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 1065.2
+    },
+    {
+      "glosses": "I WANT GO HOME",
+      "category": "infinitive",
+      "expected": [
+        "I want to go home."
+      ],
+      "rule_sentence": "I want to go home.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R30"
+      ],
+      "rules_ms": 2.379,
+      "final_sentence": "I want to go home.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "I want to go home.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 575.8
+    },
+    {
+      "glosses": "HELLO",
+      "category": "greeting",
+      "expected": [
+        "Hello!"
+      ],
+      "rule_sentence": "Hello!",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R45"
+      ],
+      "rules_ms": 0.323,
+      "final_sentence": "Hello!",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Hello.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 349.8
+    },
+    {
+      "glosses": "HELLO I HUNGRY",
+      "category": "greeting",
+      "expected": [
+        "Hello! I am hungry."
+      ],
+      "rule_sentence": "Hello! I am hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R03",
+        "R26"
+      ],
+      "rules_ms": 0.772,
+      "final_sentence": "Hello, I'm hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "Hello, I'm hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 920.0
+    },
+    {
+      "glosses": "HELLO HELP",
+      "category": "greeting",
+      "expected": [
+        "Hello! Please help me.",
+        "Hello! Help me.",
+        "Hello! Help me, please."
+      ],
+      "rule_sentence": "Hello! Please help me.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R03",
+        "R15",
+        "R19",
+        "R42"
+      ],
+      "rules_ms": 0.947,
+      "final_sentence": "Hello! Please help me.",
+      "final_correct": true,
+      "llm_status": "rejected",
+      "llm_raw": "Hello, can you help me?",
+      "llm_reason": "the LLM changed the sentence type (question vs statement)",
+      "llm_ms": 922.0
+    },
+    {
+      "glosses": "THANK_YOU",
+      "category": "formula",
+      "expected": [
+        "Thank you."
+      ],
+      "rule_sentence": "Thank you.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [],
+      "rules_ms": 0.475,
+      "final_sentence": "Thank you.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Thank you.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 711.4
+    },
+    {
+      "glosses": "THANK_YOU YOU",
+      "category": "formula",
+      "expected": [
+        "Thank you."
+      ],
+      "rule_sentence": "Thank you.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R02"
+      ],
+      "rules_ms": 0.425,
+      "final_sentence": "Thank you.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Thank you.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 865.6
+    },
+    {
+      "glosses": "YES",
+      "category": "reply",
+      "expected": [
+        "Yes."
+      ],
+      "rule_sentence": "Yes.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [],
+      "rules_ms": 0.103,
+      "final_sentence": "Yes.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Yes.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 571.4
+    },
+    {
+      "glosses": "NO",
+      "category": "reply",
+      "expected": [
+        "No."
+      ],
+      "rule_sentence": "No.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [],
+      "rules_ms": 0.315,
+      "final_sentence": "No.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "No.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 572.7
+    },
+    {
+      "glosses": "YES PLEASE",
+      "category": "reply",
+      "expected": [
+        "Yes, please."
+      ],
+      "rule_sentence": "Yes, please.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R05"
+      ],
+      "rules_ms": 0.426,
+      "final_sentence": "Yes, please.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Yes, please.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 734.9
+    },
+    {
+      "glosses": "NO THANK_YOU",
+      "category": "reply",
+      "expected": [
+        "No, thank you."
+      ],
+      "rule_sentence": "No, thank you.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R05"
+      ],
+      "rules_ms": 0.39,
+      "final_sentence": "No, thank you.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "No, thank you.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 848.5
+    },
+    {
+      "glosses": "YES I HUNGRY",
+      "category": "reply",
+      "expected": [
+        "Yes, I am hungry."
+      ],
+      "rule_sentence": "Yes, I am hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R05",
+        "R26"
+      ],
+      "rules_ms": 0.818,
+      "final_sentence": "Yes, I'm hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "Yes, I'm hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 1089.6
+    },
+    {
+      "glosses": "I WANT WATER PLEASE",
+      "category": "politeness",
+      "expected": [
+        "I want some water, please.",
+        "I want water, please."
+      ],
+      "rule_sentence": "I want some water, please.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R31",
+        "R44"
+      ],
+      "rules_ms": 1.113,
+      "final_sentence": "I want water, please.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I want water, please.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 1165.6
+    },
+    {
+      "glosses": "PLEASE WATER",
+      "category": "politeness",
+      "expected": [
+        "Water, please."
+      ],
+      "rule_sentence": "Water, please.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R43",
+        "R44"
+      ],
+      "rules_ms": 0.791,
+      "final_sentence": "Water, please.",
+      "final_correct": true,
+      "llm_status": "rejected",
+      "llm_raw": "Can I have some water?",
+      "llm_reason": "the LLM changed the sentence type (question vs statement)",
+      "llm_ms": 683.8
+    },
+    {
+      "glosses": "WATER PLEASE",
+      "category": "politeness",
+      "expected": [
+        "Water, please."
+      ],
+      "rule_sentence": "Water, please.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R44"
+      ],
+      "rules_ms": 0.393,
+      "final_sentence": "Water, please.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Water, please.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 658.2
+    },
+    {
+      "glosses": "I I HUNGRY",
+      "category": "clean-up",
+      "expected": [
+        "I am hungry."
+      ],
+      "rule_sentence": "I am hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R01",
+        "R26"
+      ],
+      "rules_ms": 0.685,
+      "final_sentence": "I'm hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 808.3
+    },
+    {
+      "glosses": "YOU HUNGRY QUESTION",
+      "category": "yes/no question",
+      "expected": [
+        "Are you hungry?"
+      ],
+      "rule_sentence": "Are you hungry?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R06",
+        "R26",
+        "R39"
+      ],
+      "rules_ms": 0.882,
+      "final_sentence": "Are you hungry?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Are you hungry?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 668.6
+    },
+    {
+      "glosses": "HUNGRY QUESTION",
+      "category": "yes/no question",
+      "expected": [
+        "Are you hungry?"
+      ],
+      "rule_sentence": "Are you hungry?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R06",
+        "R21",
+        "R26",
+        "R39"
+      ],
+      "rules_ms": 0.754,
+      "final_sentence": "Are you hungry?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Are you hungry?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 695.1
+    },
+    {
+      "glosses": "YOU WANT WATER QUESTION",
+      "category": "yes/no question",
+      "expected": [
+        "Do you want some water?",
+        "Do you want water?"
+      ],
+      "rule_sentence": "Do you want some water?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R06",
+        "R31",
+        "R40"
+      ],
+      "rules_ms": 1.371,
+      "final_sentence": "Do you want some water?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Do you want some water?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 804.5
+    },
+    {
+      "glosses": "WATER YOU WANT QUESTION",
+      "category": "yes/no question",
+      "expected": [
+        "Do you want some water?",
+        "Do you want water?"
+      ],
+      "rule_sentence": "Do you want some water?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R06",
+        "R10",
+        "R31",
+        "R40"
+      ],
+      "rules_ms": 1.469,
+      "final_sentence": "Do you want some water?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Do you want some water?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 1077.7
+    },
+    {
+      "glosses": "I NO HUNGRY",
+      "category": "negation",
+      "expected": [
+        "I am not hungry."
+      ],
+      "rule_sentence": "I am not hungry.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R08",
+        "R26",
+        "R27"
+      ],
+      "rules_ms": 1.578,
+      "final_sentence": "I'm not hungry.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm not hungry.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 868.1
+    },
+    {
+      "glosses": "I THIRSTY",
+      "category": "copula",
+      "expected": [
+        "I am thirsty."
+      ],
+      "rule_sentence": "I am thirsty.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R26"
+      ],
+      "rules_ms": 0.394,
+      "final_sentence": "I'm thirsty.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm thirsty.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 874.1
+    },
+    {
+      "glosses": "I HUNGRY THIRSTY",
+      "category": "conjunction",
+      "expected": [
+        "I am hungry and thirsty."
+      ],
+      "rule_sentence": "I am hungry and thirsty.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R26",
+        "R36"
+      ],
+      "rules_ms": 2.32,
+      "final_sentence": "I'm hungry and thirsty.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm hungry and thirsty.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 621.1
+    },
+    {
+      "glosses": "HE WANT FOOD",
+      "category": "agreement",
+      "expected": [
+        "He wants some food.",
+        "He wants food."
+      ],
+      "rule_sentence": "He wants some food.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R29",
+        "R31"
+      ],
+      "rules_ms": 0.841,
+      "final_sentence": "He wants food.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "He wants food.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 776.6
+    },
+    {
+      "glosses": "SHE SICK",
+      "category": "copula",
+      "expected": [
+        "She is sick."
+      ],
+      "rule_sentence": "She is sick.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R26"
+      ],
+      "rules_ms": 0.551,
+      "final_sentence": "She is sick.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "She is sick.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 840.9
+    },
+    {
+      "glosses": "WE GO SCHOOL",
+      "category": "motion",
+      "expected": [
+        "We are going to school."
+      ],
+      "rule_sentence": "We are going to school.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R25",
+        "R33"
+      ],
+      "rules_ms": 4.084,
+      "final_sentence": "We're going to school.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "We're going to school.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 759.6
+    },
+    {
+      "glosses": "I GO BATHROOM",
+      "category": "motion",
+      "expected": [
+        "I am going to the bathroom."
+      ],
+      "rule_sentence": "I am going to the bathroom.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R25",
+        "R33"
+      ],
+      "rules_ms": 0.991,
+      "final_sentence": "I'm going to the bathroom.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I'm going to the bathroom.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 783.8
+    },
+    {
+      "glosses": "BATHROOM WHERE",
+      "category": "wh-question",
+      "expected": [
+        "Where is the bathroom?"
+      ],
+      "rule_sentence": "Where is the bathroom?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R11",
+        "R37"
+      ],
+      "rules_ms": 0.647,
+      "final_sentence": "Where is the bathroom?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Where is the bathroom?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 946.9
+    },
+    {
+      "glosses": "YOU GO WHERE",
+      "category": "wh-question",
+      "expected": [
+        "Where do you go?",
+        "Where are you going?"
+      ],
+      "rule_sentence": "Where do you go?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R11",
+        "R38"
+      ],
+      "rules_ms": 1.249,
+      "final_sentence": "Where do you go?",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "Where do you go?",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 679.5
+    },
+    {
+      "glosses": "WHAT YOUR NAME",
+      "category": "wh-question",
+      "expected": [
+        "What is your name?"
+      ],
+      "rule_sentence": "What is your name?",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R12",
+        "R37"
+      ],
+      "rules_ms": 0.614,
+      "final_sentence": "What's your name?",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "What's your name?",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 740.2
+    },
+    {
+      "glosses": "I NEED DOCTOR",
+      "category": "article",
+      "expected": [
+        "I need a doctor."
+      ],
+      "rule_sentence": "I need a doctor.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R32"
+      ],
+      "rules_ms": 0.669,
+      "final_sentence": "I need a doctor.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "I need a doctor.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 926.5
+    },
+    {
+      "glosses": "DOCTOR COME",
+      "category": "article",
+      "expected": [
+        "The doctor is coming."
+      ],
+      "rule_sentence": "The doctor is coming.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R25",
+        "R34"
+      ],
+      "rules_ms": 0.606,
+      "final_sentence": "The doctor is coming.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "The doctor is coming.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 644.1
+    },
+    {
+      "glosses": "I LIKE YOU",
+      "category": "object pronoun",
+      "expected": [
+        "I like you."
+      ],
+      "rule_sentence": "I like you.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R24"
+      ],
+      "rules_ms": 0.518,
+      "final_sentence": "I like you.",
+      "final_correct": true,
+      "llm_status": "unchanged",
+      "llm_raw": "I like you.",
+      "llm_reason": "draft was already natural",
+      "llm_ms": 1481.3
+    },
+    {
+      "glosses": "I HELP NO",
+      "category": "negation",
+      "expected": [
+        "I do not need help."
+      ],
+      "rule_sentence": "I do not need help.",
+      "rule_correct": true,
+      "rule_wer": 0.0,
+      "rules_fired": [
+        "R07",
+        "R17",
+        "R28"
+      ],
+      "rules_ms": 1.183,
+      "final_sentence": "I don't need help.",
+      "final_correct": true,
+      "llm_status": "ok",
+      "llm_raw": "I don't need help.",
+      "llm_reason": "meaning preserved",
+      "llm_ms": 883.3
+    }
+  ],
+  "final_accuracy": 1.0,
+  "llm_status_counts": {
+    "ok": 34,
+    "unchanged": 23,
+    "rejected": 2
+  },
+  "llm_mean_ms": 754.3508474576271
+}

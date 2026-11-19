@@ -1,0 +1,38 @@
+{
+  "stages": [
+    {
+      "stage": "beam-search decoder",
+      "n": 59,
+      "mean_ms": 0.037,
+      "median_ms": 0.034,
+      "p95_ms": 0.06
+    },
+    {
+      "stage": "rule engine (forward chaining)",
+      "n": 59,
+      "mean_ms": 0.593,
+      "median_ms": 0.577,
+      "p95_ms": 1.111
+    },
+    {
+      "stage": "LLM refinement (llama3.2:3b)",
+      "n": 10,
+      "mean_ms": 542.707,
+      "median_ms": 540.686,
+      "p95_ms": 660.212
+    },
+    {
+      "stage": "text-to-speech start (warm worker)",
+      "n": 5,
+      "mean_ms": 0.0,
+      "median_ms": 0.0,
+      "p95_ms": 0.0
+    }
+  ],
+  "notes": [
+    "No trained model at D:\\AI_PRJ\\models\\sign_classifier.joblib. Collect data (python -m gesturebridge.collect) and train (python -m gesturebridge.train) first."
+  ],
+  "hold_ms": 600.0,
+  "after_speak_sign_ms": 543.3,
+  "estimated_end_to_end_ms": 1143.3
+}
