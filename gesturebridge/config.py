@@ -18,6 +18,7 @@ LEXICON_PATH = KNOWLEDGE_DIR / "lexicon.json"
 RULES_PATH = KNOWLEDGE_DIR / "grammar_rules.json"
 CORPUS_PATH = KNOWLEDGE_DIR / "gloss_corpus.txt"
 PHRASEBOOK_PATH = KNOWLEDGE_DIR / "hindi_phrasebook.json"
+CUSTOM_SIGNS_PATH = KNOWLEDGE_DIR / "custom_signs.json"   # words the team added themselves
 
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_PATH = DATA_DIR / "raw" / "landmarks.csv"

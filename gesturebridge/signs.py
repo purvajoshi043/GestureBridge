@@ -6,7 +6,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from .config import SIGNS_PATH
+from .config import CUSTOM_SIGNS_PATH, SIGNS_PATH
 
 
 @dataclass(frozen=True)
@@ -23,11 +23,25 @@ class SignVocabulary:
         self._by_label = {s.label: s for s in signs}
 
     @classmethod
-    def load(cls, path: Path = SIGNS_PATH) -> "SignVocabulary":
+    def load(cls, path: Path = SIGNS_PATH, custom_path: Path | None = CUSTOM_SIGNS_PATH) -> "SignVocabulary":
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         signs = [Sign(item["label"].upper(), item["type"], item["keypose"],
                       item.get("basis") or item.get("action", "")) for item in data["signs"]]
+        if custom_path is not None:       # words the team added in the app
+            from .custom_signs import load_custom
+            known = {s.label for s in signs}
+            signs += [Sign(item["label"], "word", item.get("how", ""), "custom word")
+                      for item in load_custom(custom_path) if item["label"] not in known]
         return cls(signs)
+
+    def add(self, sign: Sign) -> None:
+        if sign.label not in self._by_label:
+            self.signs.append(sign)
+            self._by_label[sign.label] = sign
+
+    @property
+    def custom(self) -> list[str]:
+        return [s.label for s in self.signs if s.note == "custom word"]
 
     @property
     def labels(self) -> list[str]:

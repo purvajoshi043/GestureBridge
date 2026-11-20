@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 
 import cv2
+import numpy as np
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
@@ -20,7 +21,9 @@ from gesturebridge.agent import GestureBridgeAgent, Translation
 from gesturebridge.collect import CONDITIONS
 from gesturebridge.config import (FIGURES_DIR, METRICS_PATH, MODEL_PATH, MODELS_DIR, RAW_DATA_PATH, REPORTS_DIR,
                                   Settings)
-from gesturebridge.dataset import append_rows, make_row, remove_burst
+from gesturebridge.custom_signs import WORD_TYPES, add_custom
+from gesturebridge.dataset import append_rows, feature_matrix, make_row, remove_burst
+from gesturebridge.hybrid import HybridClassifier, find_conflict, novelty_from_dataset
 from gesturebridge.evaluate import load_cases, same_sentence
 from gesturebridge.hand_tracker import HandTracker, draw_hand, draw_label, open_camera
 from gesturebridge.history import HistoryLog
@@ -28,7 +31,7 @@ from gesturebridge.language.llm import PROMPT_STYLES
 from gesturebridge.live import LiveEngine
 from gesturebridge.pipeline import LanguagePipeline, TranslationResult, parse_gloss_text
 from gesturebridge.recognizer import SignClassifier
-from gesturebridge.signs import SignVocabulary
+from gesturebridge.signs import Sign, SignVocabulary
 from gesturebridge.speech.stt import transcribe
 from gesturebridge.handshape_rules import ALL_SIGNS, HANDSHAPES, MODES, RuleClassifier
 from gesturebridge.starter import GESTURE_HELP, StarterClassifier, use_starter, use_trained
@@ -43,7 +46,7 @@ INSTANT_CHOICE = "Instant: 58 signs, our rule-based recogniser"
 EMOJI = {label: emoji for label, (emoji, _) in ALL_SIGNS.items()} | {"QUESTION": "❓", "NOTHING": "✋"}
 MODE_NAMES = {"words": "🗣️ Words", "letters": "🔤 Letters (spell names)", "numbers": "🔢 Numbers"}
 BEST_CHOICE = "Best model (chosen by training)"
-VIDEO_WIDTH = 480
+HYBRID_CHOICE = "Instant + your trained signs"
 
 
 # ---------------------------------------------------------------------------
@@ -65,6 +68,61 @@ def shared_vocabulary() -> SignVocabulary:
 @st.cache_resource(show_spinner="Loading the sign model ...")
 def load_classifier(path: str, modified: float) -> SignClassifier:
     return SignClassifier.load(Path(path))
+
+
+@st.cache_resource(show_spinner="Preparing your trained signs …")
+def hybrid_parts(model_path: str, modified: float, data_modified: float):
+    """The trained model + its reference frames (older models: rebuilt from the recordings)."""
+    trained = SignClassifier.load(Path(model_path))
+    novelty = trained.bundle.get("novelty")
+    if novelty is None and RAW_DATA_PATH.exists():
+        novelty = novelty_from_dataset(pd.read_csv(RAW_DATA_PATH), trained.classes)
+    return trained, novelty
+
+
+def current_trained():
+    """(trained model, novelty data) or (None, None) before the first training."""
+    if not MODEL_PATH.exists():
+        return None, None
+    data_modified = RAW_DATA_PATH.stat().st_mtime if RAW_DATA_PATH.exists() else 0.0
+    return hybrid_parts(str(MODEL_PATH), MODEL_PATH.stat().st_mtime, data_modified)
+
+
+def record_kind(label: str) -> str:
+    if label.startswith("LETTER_"):
+        return "letter"
+    if label.startswith("DIGIT_"):
+        return "number"
+    if label in vocab.custom:
+        return "your word"
+    return vocab.kind(label)
+
+
+def keypose_text(label: str) -> str:
+    sign = vocab.get(label)
+    if sign and sign.keypose:
+        return sign.keypose
+    if label in ALL_SIGNS:
+        return ALL_SIGNS[label][1]
+    return "Your own handshape."
+
+
+def conflict_warning(rows: list[dict], label: str) -> str | None:
+    """'This sign already exists': the new recording looks like another sign of the same mode."""
+    try:
+        X, _, _ = feature_matrix(pd.DataFrame(rows))
+        trained, novelty = current_trained()
+        found = find_conflict(X, label, trained, novelty)
+    except Exception:  # the check must never lose a recording
+        return None
+    if not found:
+        return None
+    other, share = found
+    mine = " (one of your trained signs)" if trained is not None and other in trained.classes else ""
+    return (f"⚠️ Saved, but this handshape already exists: it is recognised as **{vocab.display(other)}**{mine} "
+            f"in {share:.0%} of the frames. Each sign needs its own handshape, otherwise the two get mixed up. "
+            "Press **↩ Undo last recording** and use a different handshape (see the sign guide), "
+            "or keep it if you are sure.")
 
 
 def model_options() -> dict[str, Path]:
@@ -165,6 +223,12 @@ def audio_html(data: bytes, mime: str, autoplay: bool, tag: str = "") -> str:
 def sign_chart_items() -> list[tuple[str, str, str]]:
     if isinstance(agent.classifier, StarterClassifier):
         return [(icon, word, how) for icon, how, word in GESTURE_HELP]
+    if isinstance(agent.classifier, HybridClassifier):
+        clf = agent.classifier
+        mine = [("⭐" + EMOJI.get(label, "✋"), vocab.display(label), "your recorded handshape")
+                for label in clf.trained_labels]
+        return mine + [(emoji, vocab.display(label), how) for label, (emoji, how) in HANDSHAPES[clf.mode].items()
+                       if label in clf.instant_labels]
     if isinstance(agent.classifier, RuleClassifier):
         return [(emoji, vocab.display(label), how) for label, (emoji, how) in HANDSHAPES[agent.classifier.mode].items()]
     if agent.classifier is not None:
@@ -199,20 +263,6 @@ def ensure_camera():
     return ss.camera
 
 
-def show_frame(slot, frame, badge: str = "● LIVE") -> None:
-    """Embed the frame in the page itself. st.image serves every frame as a separate media
-    file that Streamlit soon deletes, which made the video blink with 404 errors."""
-    if frame.shape[1] > VIDEO_WIDTH:  # smaller frames decode faster in the browser
-        frame = cv2.resize(frame, (VIDEO_WIDTH, round(frame.shape[0] * VIDEO_WIDTH / frame.shape[1])),
-                           interpolation=cv2.INTER_AREA)
-    ok, jpeg = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 70])
-    if ok:
-        data = base64.b64encode(jpeg.tobytes()).decode("ascii")
-        slot.markdown(f"<div class='gb-video'><span class='gb-badge'>{badge}</span>"
-                      f"<img src='data:image/jpeg;base64,{data}' alt='camera' data-ts='{time.time() * 1000:.0f}'>"
-                      "</div>", unsafe_allow_html=True)
-
-
 def recorded_counts() -> pd.DataFrame:
     if not RAW_DATA_PATH.exists():
         return pd.DataFrame(columns=["label", "signer", "burst"])
@@ -227,19 +277,30 @@ with st.sidebar:
     st.header("Settings")
 
     options = model_options()
-    if ss.pop("select_best_model", False) and BEST_CHOICE in options:
-        ss.model_choice = BEST_CHOICE
-    choice = st.selectbox("Sign model", list(options) + [INSTANT_CHOICE, STARTER_CHOICE], key="model_choice",
-                          help="Instant = 19 signs from our handshape rules (no training). Starter = MediaPipe's "
-                               "7 pretrained gestures. Your trained model appears here after training.")
-    if choice == INSTANT_CHOICE:
+    has_trained = BEST_CHOICE in options
+    if ss.pop("select_best_model", False) and has_trained:
+        ss.model_choice = HYBRID_CHOICE
+    choices = ([HYBRID_CHOICE] if has_trained else []) + [INSTANT_CHOICE] + list(options) + [STARTER_CHOICE]
+    if ss.get("model_choice") not in choices:
+        ss.pop("model_choice", None)
+    choice = st.selectbox("Sign model", choices, key="model_choice",
+                          help="Instant + your trained signs = the signs you recorded and trained, plus every "
+                               "other built-in sign (your own handshape replaces a built-in one). Instant = 58 "
+                               "signs from our handshape rules (no training). The other trained models only know "
+                               "the signs you recorded. Starter = MediaPipe's 7 pretrained gestures.")
+    if choice in (INSTANT_CHOICE, HYBRID_CHOICE):
         mode = st.radio("Sign mode", MODES, key="instant_mode", format_func=MODE_NAMES.get,
                         help="Like real sign languages, one handshape means different things: words, "
                              "fingerspelled letters (to spell names) or numbers.")
-        if ss.model_loaded != ("instant", mode):
+        if choice == INSTANT_CHOICE:
+            stamp, make = ("instant", mode), lambda: RuleClassifier(mode)
+        else:
+            trained, novelty = current_trained()
+            stamp, make = ("hybrid", mode, id(trained)), lambda: HybridClassifier(trained, mode, novelty)
+        if ss.model_loaded != stamp:
             agent.commit_spelling()
-            use_trained(agent, RuleClassifier(mode))
-            ss.model_loaded = ("instant", mode)
+            use_trained(agent, make())
+            ss.model_loaded = stamp
     elif choice == STARTER_CHOICE:
         stamp = ("starter",)
         if ss.model_loaded != stamp:
@@ -263,7 +324,7 @@ with st.sidebar:
         st.markdown(f"<div class='gb-side-title'>📖 Sign guide · {len(sign_chart_items())} signs</div>"
                     "<div class='gb-muted'>Hold a handshape still until the bar under your hand fills.</div>"
                     + sign_chart_html(side=True), unsafe_allow_html=True)
-        if isinstance(agent.classifier, RuleClassifier) and agent.classifier.mode != "words":
+        if isinstance(agent.classifier, (RuleClassifier, HybridClassifier)) and agent.classifier.mode != "words":
             st.caption("Letters/numbers join into one word. Take your hand out of view (1.5 s) or press "
                        "Speak to add it to the sentence – e.g. Words: MY NAME, then Letters: N-A-N-C-Y.")
 
@@ -645,12 +706,36 @@ with tab_rec:
     rec_signer = c1.text_input("Your name (signer)", key="rec_signer", placeholder="e.g. nancy")
     rec_condition = c2.selectbox("Lighting / background", CONDITIONS, key="rec_condition")
     rec_samples = c3.slider("Frames per recording", 30, 200, 80, step=10, key="rec_samples")
-    rec_sign = st.selectbox("Sign to record", vocab.labels, key="rec_sign",
-                            format_func=lambda label: f"{vocab.display(label)}  ({vocab.kind(label)})")
-    st.info(f"**Key-pose for {vocab.display(rec_sign)}:** {vocab.get(rec_sign).keypose}  \n"
+    with st.expander("➕ Add your own word – you choose the word and record its sign"):
+        a1, a2 = st.columns(2)
+        new_word = a1.text_input("Word", key="new_word", placeholder="e.g. mother, school, eat")
+        new_type = a2.selectbox("Type of word (for the grammar rules)", list(WORD_TYPES), key="new_type",
+                                format_func=WORD_TYPES.get)
+        new_how = st.text_input("How you make the sign (optional, shown in the sign guide)", key="new_how",
+                                placeholder="e.g. flat hand on the chest")
+        if st.button("Add word", key="add_word"):
+            item, reason = add_custom(new_word, new_type, new_how, vocab.labels, list(ALL_SIGNS),
+                                      agent.pipeline.kb)
+            if reason:
+                st.warning("⚠️ " + reason)
+            else:
+                vocab.add(Sign(item["label"], "word", item["how"], "custom word"))
+                agent.pipeline.kb.add_custom(item)
+                ss.rec_sign = item["label"]
+                ss.rec_message = ("success", f"Added the word '{item['text']}'. It is selected below: record its "
+                                             "sign 3 times, then train.")
+                st.rerun()
+    record_labels = vocab.labels + list(HANDSHAPES["letters"]) + list(HANDSHAPES["numbers"])
+    rec_sign = st.selectbox("Sign to record", record_labels, key="rec_sign",
+                            format_func=lambda label: f"{vocab.display(label)}  ({record_kind(label)})")
+    st.info(f"**Key-pose for {vocab.display(rec_sign)}:** {keypose_text(rec_sign)}  \n"
             "Press Record, get ready during the 2-second countdown, then hold the pose and move the hand a "
-            "little (closer, further, slightly tilted).")
+            "little (closer, further, slightly tilted). Recording your own handshape for an existing sign "
+            "replaces the built-in one in **Instant + your trained signs**.")
     k1, k2, _ = st.columns(3)
+    if not rec_signer.strip():
+        st.warning("✍️ Type your name in **Your name (signer)** at the top of this tab – the **⏺ Record** "
+                   "button switches on as soon as a name is there (after reloading the page, type it again).")
     if k1.button("⏺ Record", type="primary", width="stretch", disabled=not rec_signer.strip()):
         engine.stop()
         ss.record_request = {"signer": rec_signer.strip().lower().replace(" ", "_"), "label": rec_sign,
@@ -971,6 +1056,14 @@ python -m gesturebridge.evaluate all                # sentence, decoder, latency
 # ---------------------------------------------------------------------------
 
 def record_burst(request: dict) -> None:
+    # the preview is the same smooth MJPEG stream as the live view: frames go to the stream server,
+    # not through the page (that made the recording preview lag). It is shown at once, while the
+    # camera and the hand tracker are still starting.
+    engine.ensure_server()
+    engine.show(cv2.putText(np.full((360, 640, 3), (36, 22, 18), np.uint8), "Starting the camera ...", (40, 190),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1.0, (230, 220, 255), 2, cv2.LINE_AA))
+    rec_video.markdown(f"<div class='gb-video'><span class='gb-badge'>● CAMERA</span>"
+                       f"<img src='{engine.url}?rec={time.time():.0f}' alt='camera'></div>", unsafe_allow_html=True)
     try:
         camera = ensure_camera()
     except RuntimeError as exc:
@@ -985,6 +1078,7 @@ def record_burst(request: dict) -> None:
     label, rows = request["label"], []
     countdown_end = time.time() + 2.0
     deadline = countdown_end + max(20.0, request["samples"] / 4)
+    last_progress = 0.0
     while len(rows) < request["samples"] and time.time() < deadline:
         ok, frame = camera.read()
         if not ok:
@@ -1004,13 +1098,19 @@ def record_burst(request: dict) -> None:
                                      hands[0], now))
             draw_label(frame, f"REC {vocab.display(label)} {len(rows)}/{request['samples']}"
                        + ("" if hands else "  - show your hand!"), (10, 32), (60, 60, 230))
-        show_frame(rec_video, frame, "● REC" if now >= countdown_end else "GET READY")
-        rec_status.progress(len(rows) / request["samples"], text=f"{len(rows)} / {request['samples']} frames")
+        engine.show(frame)
+        if now - last_progress > 0.25:        # a few page updates per second are enough for the bar
+            rec_status.progress(len(rows) / request["samples"], text=f"{len(rows)} / {request['samples']} frames")
+            last_progress = now
+    engine.show(cv2.putText(np.full((360, 640, 3), (36, 22, 18), np.uint8), "Saved - see below", (40, 190),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1.0, (230, 220, 255), 2, cv2.LINE_AA))
     release_camera()                  # hand the camera back to the live translator
     if rows:
         append_rows(rows)
         ss.last_burst = {"burst": burst, "label": label, "n": len(rows)}
-        ss.rec_message = ("success", f"Saved {len(rows)} samples of {vocab.display(label)}.")
+        warning = conflict_warning(rows, label)
+        ss.rec_message = (("warning", warning) if warning else
+                          ("success", f"Saved {len(rows)} samples of {vocab.display(label)}."))
     else:
         ss.rec_message = ("error", "No hand was seen - nothing saved. Check the light and keep the hand in view.")
 
@@ -1020,7 +1120,7 @@ if ss.get("record_request"):
     st.rerun()
 if ss.get("rec_message"):
     kind, text = ss.pop("rec_message")
-    (rec_status.success if kind == "success" else rec_status.error)(text)
+    {"success": rec_status.success, "warning": rec_status.warning}.get(kind, rec_status.error)(text)
 
 if ss.pop("train_request", False):
     with tab_rec, st.status("Training Random Forest, SVM and MLP …", expanded=True) as status:
@@ -1030,6 +1130,8 @@ if ss.pop("train_request", False):
             status.update(label=f"Done - best: {best['name']} (macro-F1 {best['macro_f1']:.3f}). "
                                 "See the Model dashboard.", state="complete")
             ss.select_best_model = True
+            status.write(f"'{HYBRID_CHOICE}' is now selected: your {len(doc['labels'])} trained signs plus "
+                         "every other built-in sign.")
         except Exception as exc:  # show problems such as too little data in the page
             status.update(label=f"Training failed: {exc}", state="error")
     if ss.get("select_best_model"):

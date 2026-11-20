@@ -44,9 +44,20 @@ class KnowledgeBase:
         self.entries = {gloss.upper(): dict(facts) for gloss, facts in entries.items()}
 
     @classmethod
-    def load(cls, path: Path = LEXICON_PATH) -> "KnowledgeBase":
+    def load(cls, path: Path = LEXICON_PATH, custom_path: Path | None = None) -> "KnowledgeBase":
         data = json.loads(Path(path).read_text(encoding="utf-8"))
-        return cls(data["entries"])
+        kb = cls(data["entries"])
+        from ..config import CUSTOM_SIGNS_PATH
+        from ..custom_signs import load_custom
+        for item in load_custom(custom_path or CUSTOM_SIGNS_PATH):   # words the team added in the app
+            kb.add_custom(item)
+        return kb
+
+    def add_custom(self, item: dict) -> None:
+        """Teach the knowledge base a word the team added (keeps known facts if the word exists)."""
+        from ..custom_signs import lexicon_facts
+        label = item["label"].upper()
+        self.entries[label] = lexicon_facts(item, self.entries.get(label))
 
     def __contains__(self, gloss: str) -> bool:
         return gloss.upper() in self.entries

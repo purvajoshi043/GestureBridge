@@ -109,6 +109,11 @@ def spelled_character(label: str) -> str | None:
     return label.split("_", 1)[1] if label.startswith(("LETTER_", "DIGIT_")) else None
 
 
+def points_from_features(features: np.ndarray) -> np.ndarray:
+    """The first 60 features are the normalised x, y, z of landmarks 1-20 (the wrist is the origin)."""
+    return np.vstack([np.zeros(3), np.asarray(features[:60], dtype=np.float64).reshape(20, 3)])
+
+
 def _ramp(value: float, start: float, end: float) -> float:
     """Fuzzy membership: 0 at `start`, 1 at `end`, linear in between."""
     return float(np.clip((value - start) / (end - start), 0.0, 1.0))
@@ -272,9 +277,7 @@ class RuleClassifier:
         return scores
 
     def predict_proba(self, features: np.ndarray) -> np.ndarray:
-        # the first 60 features are the normalised x, y, z of landmarks 1-20 (the wrist is the origin)
-        points = np.vstack([np.zeros(3), np.asarray(features[:60], dtype=np.float64).reshape(20, 3)])
-        scores = self.scores(points)
+        scores = self.scores(points_from_features(features))
         strength = np.array([scores[c] for c in self.classes]) ** 2 + 1e-4   # sharpen, avoid zeros
         return strength / strength.sum()
 

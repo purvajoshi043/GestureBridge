@@ -25,6 +25,12 @@ camera → MediaPipe hand landmarks → 106 features → sign classifier (RF / S
   spell names, numbers 0-10), with the sign guide in the sidebar: our knowledge-based handshape recogniser
   (`gesturebridge/handshape_rules.py`) turns the landmarks into fuzzy facts (finger straight/curled,
   thumb in/out, pointing direction, fingertips touching) and scores one IF-THEN rule per sign.
+* **Your own signs (hybrid mode)**: record your own handshape for any word, letter or number - or add a
+  completely new word (you choose the word, its word type and its sign) - and train. "Instant + your
+  trained signs" then uses your recordings for those signs and the built-in rules for all others; a
+  nearest-neighbour novelty check stops the trained model from claiming signs it never saw
+  (`gesturebridge/hybrid.py`, `gesturebridge/custom_signs.py`). The app warns when a word already exists
+  or when a new recording is the handshape of another sign.
 * **Speech in the browser**: every sentence gets an audio player that plays by itself (or straight to the
   laptop speaker - sidebar → Speech).
 * **Control signs**: OK sign = speak, V sign = clear, horns = delete last word (buttons too).

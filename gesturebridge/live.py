@@ -16,6 +16,7 @@ a few times per second; recognition runs on every camera frame in this thread.
 from __future__ import annotations
 
 import atexit
+import socket
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -29,6 +30,21 @@ STREAM_PORT = 8503
 STREAM_WIDTH = 640
 IDLE_STOP_SECONDS = 5.0      # release the camera when no page has watched the stream for this long
 RESUME_WINDOW_SECONDS = 600  # a page that comes back within this time resumes the camera by itself
+
+
+class _ExclusiveServer(ThreadingHTTPServer):
+    """A port that is already in use must fail, so the next free port is tried.
+
+    The standard server sets SO_REUSEADDR, and on Windows that lets a second program bind
+    the SAME port - two copies of the app then share 8503 and a page may show the other
+    copy's video."""
+
+    allow_reuse_address = False
+
+    def server_bind(self):
+        if hasattr(socket, "SO_EXCLUSIVEADDRUSE"):            # Windows: nobody else may share the port
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
 
 
 def _placeholder(text: str) -> bytes:
@@ -92,7 +108,7 @@ class LiveEngine:
 
         for port in range(self.port, self.port + 20):   # another copy of the app may hold the first port
             try:
-                self._server = ThreadingHTTPServer(("127.0.0.1", port), StreamHandler)
+                self._server = _ExclusiveServer(("127.0.0.1", port), StreamHandler)
                 self.port = port
                 break
             except OSError:
@@ -129,6 +145,14 @@ class LiveEngine:
             self._jpeg = jpeg
             self._seq += 1
             self._cond.notify_all()
+
+    def show(self, frame: np.ndarray) -> None:
+        """Put a frame on the stream from outside the camera loop (the recording preview uses this,
+        so recording is as smooth as the live view instead of pushing images through the page)."""
+        if frame.shape[1] > STREAM_WIDTH:
+            frame = cv2.resize(frame, (STREAM_WIDTH, round(frame.shape[0] * STREAM_WIDTH / frame.shape[1])),
+                               interpolation=cv2.INTER_AREA)
+        self._publish(cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 80])[1].tobytes())
 
     # -- camera loop ---------------------------------------------------------------
     @property

@@ -42,6 +42,7 @@ from sklearn.svm import SVC
 from . import plots
 from .config import METRICS_PATH, MODEL_PATH, MODELS_DIR, RAW_DATA_PATH, REPORTS_DIR
 from .dataset import feature_matrix, group_ids, load_dataset, summary
+from .hybrid import build_novelty
 from .features import FEATURE_NAMES, FEATURE_VERSION
 from .recognizer import _single_threaded
 
@@ -147,8 +148,9 @@ def evaluate(model, X: np.ndarray, y: np.ndarray, labels: list[str]) -> dict:
     }
 
 
-def make_bundle(model, name: str, df: pd.DataFrame, metrics: dict) -> dict:
+def make_bundle(model, name: str, df: pd.DataFrame, metrics: dict, novelty: dict | None = None) -> dict:
     return {
+        "novelty": novelty,          # reference frames: lets the hybrid recogniser tell "not one of mine"
         "pipeline": model,
         "classes": [str(c) for c in model.classes_],
         "model_name": name,
@@ -287,14 +289,16 @@ def train(data_path: Path = RAW_DATA_PATH, models_dir: Path = MODELS_DIR, report
     log("Retraining on all data for deployment ...")
     X_all, y_all, _ = feature_matrix(df, augment_copies=augment, seed=seed)
     models_dir.mkdir(parents=True, exist_ok=True)
+    X_ref, y_ref, g_ref = feature_matrix(df, augment_copies=0)
+    novelty = build_novelty(X_ref, y_ref, g_ref, seed=seed)
     saved = {}
     for key in model_keys:
         final = clone(fitted[key]).fit(X_all, y_all)
         path = models_dir / f"model_{key}.joblib"
-        joblib.dump(make_bundle(final, key, df, results[key]), path)
+        joblib.dump(make_bundle(final, key, df, results[key], novelty), path)
         saved[key] = str(path)
         if key == best:
-            joblib.dump(make_bundle(final, key, df, results[key]), models_dir / MODEL_PATH.name)
+            joblib.dump(make_bundle(final, key, df, results[key], novelty), models_dir / MODEL_PATH.name)
 
     figures = {
         "comparison": plots.model_comparison(

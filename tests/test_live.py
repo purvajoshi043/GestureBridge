@@ -95,3 +95,37 @@ def test_stop_button_is_not_undone_by_a_returning_page(fake_camera):
         next(response.iter_content(8192))
         time.sleep(1.0)
         assert not engine.running
+
+
+def test_two_copies_of_the_app_never_share_a_stream_port():
+    first, second = LiveEngine(port=8610), LiveEngine(port=8610)
+    first.ensure_server()
+    second.ensure_server()
+    assert first.port != second.port            # Windows would otherwise let both bind 8610
+
+
+def test_frames_shown_from_outside_reach_the_stream():
+    engine = LiveEngine(port=8620)
+    engine.ensure_server()
+    got = []
+
+    def viewer():
+        with requests.get(engine.url, stream=True, timeout=5) as response:
+            end, buf = time.time() + 1.5, b""
+            for chunk in response.iter_content(4096):
+                buf += chunk
+                got.extend([1] * buf.count(b"--frame"))
+                buf = buf.rsplit(b"--frame", 1)[-1]
+                if time.time() > end:
+                    break
+
+    t = threading.Thread(target=viewer)
+    t.start()
+    time.sleep(0.3)
+    frame = np.zeros((480, 640, 3), np.uint8)
+    for i in range(30):                          # the recording preview publishes like this
+        frame[:] = i
+        engine.show(frame)
+        time.sleep(1 / 30)
+    t.join()
+    assert len(got) >= 15
